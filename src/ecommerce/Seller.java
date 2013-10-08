@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Seller extends User{
 	protected ArrayList<Product> products;
+	protected ArrayList<FeedbackToSeller> feedbacks;
 	
 	public Seller(String name, String country) {
 		super(name, country);
@@ -27,6 +28,10 @@ public class Seller extends User{
 		}
 		
 		return false;
+	}
+	
+	public int getTrust(){
+		return 0;
 	}
 
 }
