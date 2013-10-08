@@ -8,5 +8,25 @@ public class Seller extends User{
 	public Seller(String name, String country) {
 		super(name, country);
 	}
+	
+	public boolean addProduct(Product item) {
+		for (int i=0; i<products.size(); i++) {
+			if (products.get(i).equals(item))
+				return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean removeProduct(Product item) {
+		for (int i=0; i<products.size(); i++) {
+			if (products.get(i).equals(item)) {
+				products.remove(i);
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 }
