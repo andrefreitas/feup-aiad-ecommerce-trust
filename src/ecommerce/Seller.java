@@ -14,7 +14,7 @@ public class Seller extends User{
 			if (products.get(i).equals(item))
 				return false;
 		}
-		
+		products.add(item);
 		return true;
 	}
 	
