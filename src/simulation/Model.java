@@ -1,5 +1,4 @@
 package simulation;
-import uchicago.src.reflector.ListPropertyDescriptor;
 import uchicago.src.sim.engine.BasicAction;
 import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimModelImpl;
@@ -7,7 +6,6 @@ import uchicago.src.sim.engine.SimInit;
 import uchicago.src.sim.gui.DisplaySurface;
 import uchicago.src.sim.gui.Object2DDisplay;
 import uchicago.src.sim.space.Object2DTorus;
-import uchicago.src.sim.util.Random;
 import uchicago.src.sim.util.SimUtilities;
 import uchicago.src.sim.analysis.OpenSequenceGraph;
 import uchicago.src.sim.analysis.Sequence;
@@ -24,17 +22,15 @@ public class Model extends SimModelImpl {
 	private Object2DTorus space;
 	private OpenSequenceGraph plot;
 
-	public static enum MovingMode { Walk, Jump };
-
 	private int numberOfAgents, spaceSize;
-	private MovingMode movingMode;
+
 
 	private Hashtable<Color, Integer> agentColors;
 	
 	public Model() {
 		this.numberOfAgents = 100;
 		this.spaceSize = 100;
-		this.movingMode = MovingMode.Walk;
+		
 	}
 
 	public String getName() {
@@ -65,13 +61,7 @@ public class Model extends SimModelImpl {
 		this.spaceSize = spaceSize;
 	}
 
-	public void setMovingMode(MovingMode movingMode) {
-		this.movingMode = movingMode;
-	}
 
-	public MovingMode getMovingMode() {
-		return movingMode;
-	}
 
 	public void setup() {
 		schedule = new Schedule();
@@ -79,12 +69,7 @@ public class Model extends SimModelImpl {
 		dsurf = new DisplaySurface(this, "Color Picking Display");
 		registerDisplaySurface("Color Picking Display", dsurf);
 
-		// property descriptors
-		Vector<MovingMode> vMM = new Vector<MovingMode>();
-		for(int i=0; i<MovingMode.values().length; i++) {
-			vMM.add(MovingMode.values()[i]);
-		}
-		descriptors.put("MovingMode", new ListPropertyDescriptor("MovingMode", vMM));
+	
 	}
 
 	public void begin() {
@@ -96,17 +81,11 @@ public class Model extends SimModelImpl {
 	public void buildModel() {
 		agentList = new ArrayList<Agent>();
 		space = new Object2DTorus(spaceSize, spaceSize);
-		for (int i = 0; i<numberOfAgents; i++) {
-			int x, y;
-			do {
-				x = Random.uniform.nextIntFromTo(0, space.getSizeX() - 1);
-				y = Random.uniform.nextIntFromTo(0, space.getSizeY() - 1);
-			} while (space.getObjectAt(x, y) != null);
-			Color color =  new Color(Random.uniform.nextIntFromTo(0,255), Random.uniform.nextIntFromTo(0,255), Random.uniform.nextIntFromTo(0,255));
-			Agent agent = new Agent(x, y, color, space);
-			space.putObjectAt(x, y, agent);
-			agentList.add(agent);
-		}
+		Color color = new Color(255,0,0);
+		Agent agent = new Agent(0,0,color,space);
+		space.putObjectAt(0, 0, agent);
+		agentList.add(agent);
+		
 	}
 
 	private void buildDisplay() {
@@ -157,18 +136,7 @@ public class Model extends SimModelImpl {
 			// shuffle agents
 			SimUtilities.shuffle(agentList);
 
-			// iterate through all agents
-			for(int i = 0; i < agentList.size(); i++) {
-				Agent agent = (Agent) agentList.get(i);
-				if(movingMode == MovingMode.Walk) {
-					agent.walk();
-				} else {
-					agent.jump();
-				}
-				Color c = agent.recolor();
-				int nAgentsWithColor = (agentColors.get(c) == null ? 1 : agentColors.get(c)+1); 
-				agentColors.put(c, nAgentsWithColor);
-			}
+			
 		}
 
 	}
