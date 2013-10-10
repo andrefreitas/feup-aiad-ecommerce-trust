@@ -28,7 +28,7 @@ public class Agent implements Drawable  {
 	public void draw(SimGraphics g) {
 		BufferedImage img = null;
 		try {
-		    img = ImageIO.read(new File("strawberry.jpg"));
+		    img = ImageIO.read(new File("res/buyer.png"));
 		} catch (IOException e) {
 			System.out.println("[ERROR] Invalid image!");
 		}
