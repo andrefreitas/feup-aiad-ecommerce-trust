@@ -5,36 +5,33 @@ import uchicago.src.sim.engine.SimModelImpl;
 import uchicago.src.sim.engine.SimInit;
 import uchicago.src.sim.gui.DisplaySurface;
 import uchicago.src.sim.gui.Object2DDisplay;
+import uchicago.src.sim.gui.SimGraphics;
+import java.awt.*;
 import uchicago.src.sim.space.Object2DTorus;
 import uchicago.src.sim.util.SimUtilities;
-import uchicago.src.sim.analysis.OpenSequenceGraph;
-import uchicago.src.sim.analysis.Sequence;
+import uchicago.src.sim.network.DefaultDrawableEdge;
+import uchicago.src.sim.network.DefaultNode;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 public class Model extends SimModelImpl {
 	private ArrayList<Agent> agentList;
 	private Schedule schedule;
 	private DisplaySurface dsurf;
 	private Object2DTorus space;
-	private OpenSequenceGraph plot;
-
+	private DefaultDrawableEdge network;
+	private DefaultNode node1;
+	private DefaultNode node2;
+	private SimGraphics graphic;
 	private int numberOfAgents, spaceSize;
-
-
-	private Hashtable<Color, Integer> agentColors;
 	
 	public Model() {
 		this.numberOfAgents = 100;
 		this.spaceSize = 100;
-		
 	}
 
 	public String getName() {
-		return "Color Picking Model";
+		return "Ecommerce Trust Simulation";
 	}
 
 	public String[] getInitParam() {
@@ -61,15 +58,11 @@ public class Model extends SimModelImpl {
 		this.spaceSize = spaceSize;
 	}
 
-
-
 	public void setup() {
 		schedule = new Schedule();
 		if (dsurf != null) dsurf.dispose();
-		dsurf = new DisplaySurface(this, "Color Picking Display");
-		registerDisplaySurface("Color Picking Display", dsurf);
-
-	
+		dsurf = new DisplaySurface(this, "Ecommerce Trust Simulation");
+		registerDisplaySurface("Ecommerce Trust Simulation", dsurf);
 	}
 
 	public void begin() {
@@ -81,62 +74,40 @@ public class Model extends SimModelImpl {
 	public void buildModel() {
 		agentList = new ArrayList<Agent>();
 		space = new Object2DTorus(spaceSize, spaceSize);
-		Color color = new Color(255,0,0);
-		Agent agent = new Agent(0,0,color,space);
+		node1 = new DefaultNode();
+		node2 = new DefaultNode();
+		network = new DefaultDrawableEdge(node1, node2);
+		graphic = new SimGraphics();
+		
+		Agent agent = new Agent(0,0,Color.red,space);
 		space.putObjectAt(0, 0, agent);
 		agentList.add(agent);
-		
 	}
 
 	private void buildDisplay() {
 		// space and display surface
 		Object2DDisplay display = new Object2DDisplay(space);
+		//graphic.drawCircle(Color.RED);
+		//network.draw(graphic, 20, 40, 30, 50);
+		graphic.setDisplaySurface(dsurf);
+		
 		display.setObjectList(agentList);
 		dsurf.addDisplayableProbeable(display, "Agents Space");
 		dsurf.display();
-
-		// graph
-		if (plot != null) plot.dispose();
-		plot = new OpenSequenceGraph("Colors and Agents", this);
-		plot.setAxisTitles("time", "n");
-		// plot number of different existing colors
-		plot.addSequence("Number of colors", new Sequence() {
-			public double getSValue() {
-				return agentColors.size();
-			}
-		});
-		// plot number of agents with the most abundant color
-		plot.addSequence("Top color", new Sequence() {
-			public double getSValue() {
-				int n = 0;
-				Enumeration<Integer> agentsPerColor = agentColors.elements();
-				while(agentsPerColor.hasMoreElements()) {
-					int c = agentsPerColor.nextElement();
-					if(c>n) n=c;
-				}
-				return n;
-			}
-		});
-		plot.display();
 	}
 
 	private void buildSchedule() {
 		schedule.scheduleActionBeginning(0, new MainAction());
 		schedule.scheduleActionAtInterval(1, dsurf, "updateDisplay", Schedule.LAST);
-		schedule.scheduleActionAtInterval(1, plot, "step", Schedule.LAST);
+
 	}
 
 
 	class MainAction extends BasicAction {
 
-		public void execute() {
-			// prepare agent colors hashtable
-			agentColors = new Hashtable<Color,Integer>();
-
+		public void execute(){
 			// shuffle agents
 			SimUtilities.shuffle(agentList);
-
-			
 		}
 
 	}
