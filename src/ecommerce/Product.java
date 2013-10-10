@@ -31,5 +31,11 @@ public class Product {
 	public int getDate() {
 		return date;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		
+		return super.equals(obj);
+	}
 	
 }
