@@ -5,7 +5,12 @@ import uchicago.src.sim.util.Random;
 import uchicago.src.sim.gui.Drawable;
 import uchicago.src.sim.gui.SimGraphics;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
+
+import javax.imageio.ImageIO;
 
 
 public class Agent implements Drawable  {
@@ -21,7 +26,13 @@ public class Agent implements Drawable  {
 	}
 
 	public void draw(SimGraphics g) {
-		g.drawFastCircle(color);
+		BufferedImage img = null;
+		try {
+		    img = ImageIO.read(new File("strawberry.jpg"));
+		} catch (IOException e) {
+			System.out.println("[ERROR] Invalid image!");
+		}
+		g.drawImage(img);
 	}
 
 	
