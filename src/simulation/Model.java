@@ -81,35 +81,37 @@ public class Model extends SimModelImpl {
 		
 		Agent agent = new Agent(0,0,Color.red,space);
 		space.putObjectAt(0, 0, agent);
+		space.putObjectAt(10, 10, new Background());
 		agentList.add(agent);
 	}
-
+	
 	private void buildDisplay() {
-		// space and display surface
+		// Background
+		Object2DDisplay background = new Object2DDisplay(space);
+		ArrayList<Background> bgs = new ArrayList<Background>();
+		bgs.add(new Background());
+		background.setObjectList(bgs);
+		dsurf.addDisplayableProbeable(background, "Background");
+
+		// Agents
 		Object2DDisplay display = new Object2DDisplay(space);
-		//graphic.drawCircle(Color.RED);
-		//network.draw(graphic, 20, 40, 30, 50);
-		graphic.setDisplaySurface(dsurf);
-		
 		display.setObjectList(agentList);
 		dsurf.addDisplayableProbeable(display, "Agents Space");
+		dsurf.setSize(200, 200);
 		dsurf.display();
 	}
 
 	private void buildSchedule() {
 		schedule.scheduleActionBeginning(0, new MainAction());
 		schedule.scheduleActionAtInterval(1, dsurf, "updateDisplay", Schedule.LAST);
-
 	}
-
-
+	
 	class MainAction extends BasicAction {
 
 		public void execute(){
 			// shuffle agents
 			SimUtilities.shuffle(agentList);
 		}
-
 	}
 
 
