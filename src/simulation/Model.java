@@ -1,18 +1,18 @@
 package simulation;
+import java.awt.Color;
+import java.util.ArrayList;
+
 import uchicago.src.sim.engine.BasicAction;
 import uchicago.src.sim.engine.Schedule;
-import uchicago.src.sim.engine.SimModelImpl;
 import uchicago.src.sim.engine.SimInit;
+import uchicago.src.sim.engine.SimModelImpl;
 import uchicago.src.sim.gui.DisplaySurface;
 import uchicago.src.sim.gui.Object2DDisplay;
 import uchicago.src.sim.gui.SimGraphics;
-import java.awt.*;
-import uchicago.src.sim.space.Object2DTorus;
-import uchicago.src.sim.util.SimUtilities;
 import uchicago.src.sim.network.DefaultDrawableEdge;
 import uchicago.src.sim.network.DefaultNode;
-import java.awt.Color;
-import java.util.ArrayList;
+import uchicago.src.sim.space.Object2DTorus;
+import uchicago.src.sim.util.SimUtilities;
 
 public class Model extends SimModelImpl {
 	private ArrayList<Agent> agentList;

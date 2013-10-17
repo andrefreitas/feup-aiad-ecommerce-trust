@@ -1,16 +1,15 @@
 package simulation;
 
-import uchicago.src.sim.space.Object2DTorus;
-import uchicago.src.sim.util.Random;
-import uchicago.src.sim.gui.Drawable;
-import uchicago.src.sim.gui.SimGraphics;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
+
+import uchicago.src.sim.gui.Drawable;
+import uchicago.src.sim.gui.SimGraphics;
+import uchicago.src.sim.space.Object2DTorus;
 
 
 public class Agent implements Drawable  {
