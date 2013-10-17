@@ -79,7 +79,7 @@ public class Model extends SimModelImpl {
 		network = new DefaultDrawableEdge(node1, node2);
 		graphic = new SimGraphics();
 		
-		Agent agent = new Agent(0,0,Color.red,space);
+		Agent agent = new Agent(0,0,Color.red,space, "Agent1", "Portugal");
 		space.putObjectAt(0, 0, agent);
 		space.putObjectAt(10, 10, new Background());
 		agentList.add(agent);
