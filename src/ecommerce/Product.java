@@ -2,10 +2,11 @@ package ecommerce;
 
 public class Product {
 	String name;
+	String category;
 	
-	public Product(String name) {
-		super();
+	public Product(String name, String category) {
 		this.name = name;
+		this.category = category;
 	}
 
 	public String getName() {
@@ -16,11 +17,12 @@ public class Product {
 		this.name = name;
 	}
 
+	public String getCategory() {
+		return category;
+	}
 
-	@Override
-	public boolean equals(Object obj) {
-		
-		return super.equals(obj);
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

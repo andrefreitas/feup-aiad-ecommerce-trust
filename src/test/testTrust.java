@@ -7,11 +7,13 @@ import org.junit.Test;
 public class testTrust {
 
 	@Test
-	public void testContext() {
+	public void testTrustOnProductAndCategory() {
 		User user1 = new User("Gilberta", "Portugal");
 		User user2 = new User("Gervásio", "Portugal");
 		User user3 = new User("Josefina", "Portugal");
 		
+		
+		// <Seller>.addFeedback(<Product>, <Category>, <Score (0-5)>, <TimeTick>, <Score>, <Buyer>)
 		// User 1 sells more computers
 		user1.addFeedback("Macbook Air 13", "computadores", 5, 100, user2);
 		user1.addFeedback("Macbook Air 13", "computadores", 4, 100, user3);
@@ -28,11 +30,12 @@ public class testTrust {
 		user3.addFeedback("Carolina Herrera", "perfumes", 5, 100, user1);
 		
 		// User 3 wants to buy a computer
-		int trust = getTrust(user1, "computadores", 10000);
-		int trust2 = getTrust(user2, "computadores", 10000);
+		double trust1 = user3.computeTrust(user1, "Macbook Air 13", "computadores", 10000);
+		double trust2 = user3.computeTrust(user2, "Macbook Air 13", "computadores", 10000);
 		
-		
-		
+		// The trust from
+		assertTrue(trust1 > trust2);
+	
 	}
 
 }
