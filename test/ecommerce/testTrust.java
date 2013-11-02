@@ -1,4 +1,4 @@
-package test;
+package ecommerce;
 import ecommerce.*;
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ public class testTrust {
 	@Test
 	public void testTrustOnProductAndCategory() {
 		User user1 = new User("Gilberta", "Portugal");
-		User user2 = new User("Gervásio", "Portugal");
+		User user2 = new User("Carlos", "Portugal");
 		User user3 = new User("Josefina", "Portugal");
 		
 		
