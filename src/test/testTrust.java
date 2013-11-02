@@ -30,11 +30,17 @@ public class testTrust {
 		user3.addFeedback("Carolina Herrera", "perfumes", 5, 100, user1);
 		
 		// User 3 wants to buy a computer
-		double trust1 = user3.computeTrust(user1, "Macbook Air 13", "computadores", 10000);
-		double trust2 = user3.computeTrust(user2, "Macbook Air 13", "computadores", 10000);
+		double linearTrust1 = user3.computeLinearTrust(user1, "Macbook Air 13", "computadores", 10000);
+		double linearTrust2 = user3.computeLinearTrust(user2, "Macbook Air 13", "computadores", 10000);
+		
+		double trust1 = user3.computeTrust(user1, "computadores", "Macbook Air 13");
+		double trust2 = user3.computeTrust(user2, "computadores", "Macbook Air 13");
 		
 		// The trust from
-		assertTrue(trust1 > trust2);
+		assertTrue(linearTrust1 > linearTrust2);
+		//System.out.println("trust1: " + trust1);
+		//System.out.println("trust2: " + trust2);
+		//assertTrue(trust1 > trust2);
 	
 	}
 
