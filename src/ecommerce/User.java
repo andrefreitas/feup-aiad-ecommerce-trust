@@ -51,7 +51,6 @@ public class User {
 			Double trust = this.trust.get(key);
 			trust = (trust  +  rating * NEW_FEEDBACK_VALUE) / (numFeedbacks + 1);
 			this.trust.put(key, trust);
-			System.out.println(key);
 		}
 		catch (Exception e){
 			this.trust.put(key, (double) rating);
@@ -79,15 +78,36 @@ public class User {
 	public double computeLinearTrust(User seller, String productName, String productCategory, int timeTick) {
 		ArrayList<Feedback> feedbacks = seller.getFeedbacks();
 		double sum = 0 ;
-		int feedbacksNumber = feedbacks.size();
-		
+		double feedbacksNumber = feedbacks.size();
+                int diff; 
+		int sameCategory;
+                int sameProduct;
+                double timeImportance;
+                
+                        
 		for(Feedback feedback: feedbacks){
-			int sameCategory = (feedback.getProduct().getCategory() == productCategory)? 1 : 0;
-			int sameProduct = (feedback.getProduct().getName() == productName)? 1 : 0;
+			sameCategory = (feedback.getProduct().getCategory() == productCategory)? 1 : 0;
+			sameProduct = (feedback.getProduct().getName() == productName)? 1 : 0;
+                        diff = timeTick - feedback.getTimeTick();
+                        timeImportance = 1.0 / (diff +  0.05);
+                        
+                        // Category and Product relevance
 			double score = feedback.getScore()
-				         + CATEGORY_BONUS * sameCategory * feedback.getScore()
-				         + PRODUCT_BONUS * sameProduct * feedback.getScore();
-			sum += score;
+				     + CATEGORY_BONUS * sameCategory * feedback.getScore()
+				     + PRODUCT_BONUS * sameProduct * feedback.getScore();
+                        
+                        feedbacksNumber += CATEGORY_BONUS * sameCategory 
+                                        +  PRODUCT_BONUS * sameProduct;
+                        
+                        if(sameCategory == 0 ){
+                            score = score * (1 - CATEGORY_BONUS );
+                        } else if (sameProduct == 0 ){
+                            score = score * (1 - PRODUCT_BONUS);
+                        }
+                        
+                        // Time relevance
+			sum += score *2;
+                        feedbacksNumber += 1;
 			
 		}
 		
