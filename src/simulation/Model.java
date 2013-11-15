@@ -1,8 +1,15 @@
 package simulation;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
+import uchicago.src.repastdemos.sugarscape.SugarAgent;
+import uchicago.src.sim.analysis.BinDataSource;
+import uchicago.src.sim.analysis.OpenHistogram;
+import uchicago.src.sim.analysis.OpenSequenceGraph;
+import uchicago.src.sim.analysis.Plot;
+import uchicago.src.sim.analysis.Sequence;
 import uchicago.src.sim.engine.BasicAction;
 import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimInit;
@@ -25,6 +32,7 @@ public class Model extends SimModelImpl {
 	private DefaultNode node1;
 	private DefaultNode node2;
 	private SimGraphics graphic;
+	private OpenSequenceGraph plot;
 	private int numberOfAgents, spaceSize;
 	
 	public Model() {
@@ -111,11 +119,31 @@ public class Model extends SimModelImpl {
 		dsurf.addDisplayableProbeable(display, "Agents Space");
 		dsurf.setSize(200, 200);
 		dsurf.display();
+		
+		// graph
+		if (plot != null) plot.dispose();
+		plot = new OpenSequenceGraph("Colors and Agents", this);
+		plot.setAxisTitles("time", "n");
+		// plot number of different existing colors
+		plot.addSequence("Agent List size", new Sequence() {
+			public double getSValue() {
+				return agentList.size();
+			}
+		});
+		// plot number of agents with the most abundant color
+		plot.addSequence("Global Trust", new Sequence() {
+			public double getSValue() {
+				return agentList.get(0).computeGlobalTrust();
+			}
+		});
+		plot.display();
+
 	}
 
 	private void buildSchedule() {
 		schedule.scheduleActionBeginning(0, new MainAction());
 		schedule.scheduleActionAtInterval(1, dsurf, "updateDisplay", Schedule.LAST);
+		schedule.scheduleActionAtInterval(1, plot, "step", Schedule.LAST);
 	}
 	
 	class MainAction extends BasicAction {
@@ -130,6 +158,8 @@ public class Model extends SimModelImpl {
 	public static void main(String[] args) {
 		SimInit init = new SimInit();
 		init.loadModel(new Model(), null, false);
+		//SimInit init2 = new SimInit();
+		//init.loadModel(new Model(), null, false);
 	}
 
 }
