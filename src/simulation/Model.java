@@ -1,6 +1,7 @@
 package simulation;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import uchicago.src.sim.engine.BasicAction;
 import uchicago.src.sim.engine.Schedule;
@@ -16,6 +17,7 @@ import uchicago.src.sim.util.SimUtilities;
 
 public class Model extends SimModelImpl {
 	private ArrayList<Agent> agentList;
+	private Hashtable<Agent, Double> trust;
 	private Schedule schedule;
 	private DisplaySurface dsurf;
 	private Object2DTorus space;
@@ -26,7 +28,7 @@ public class Model extends SimModelImpl {
 	private int numberOfAgents, spaceSize;
 	
 	public Model() {
-		this.numberOfAgents = 100;
+		this.numberOfAgents = 10;
 		this.spaceSize = 100;
 	}
 
@@ -79,10 +81,20 @@ public class Model extends SimModelImpl {
 		network = new DefaultDrawableEdge(node1, node2);
 		graphic = new SimGraphics();
 		
-		Agent agent = new Agent(0,0,Color.red,space, "Agent1", "Portugal");
-		space.putObjectAt(0, 0, agent);
-		space.putObjectAt(10, 10, new Background());
-		agentList.add(agent);
+		int x = 10;
+		int y = 10;
+		for (int i = 0; i < this.numberOfAgents; i++) {
+			Agent agent1 = new Agent(x+8,y+8,Color.red,space, "Agent" + i, "Portugal");
+			agentList.add(agent1);
+			// TODO: draw number and circle - function found but not working
+			space.putObjectAt(10, 10, graphic);
+			System.out.println(agent1.computeGlobalTrust());
+			x = x + 8;
+			y = y + 8;
+		}
+		
+		
+		
 	}
 	
 	private void buildDisplay() {

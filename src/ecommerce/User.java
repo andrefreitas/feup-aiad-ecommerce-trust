@@ -58,6 +58,22 @@ public class User {
 		
 	}
 	
+	public double computeGlobalTrust() {
+		int feedbacks_size = this.feedbacks.size();
+		if (feedbacks_size > 0) {
+			double sum = 0;
+			for (Feedback feedback: this.feedbacks) {
+				sum = sum + feedback.getScore();
+			}
+		
+			return (sum/this.feedbacks.size());
+		}
+		else {
+			return 0;
+		}
+		
+	}
+	
     public double computeTrust(User seller, String productCategory, String productName){
     	
     	try {
@@ -79,10 +95,10 @@ public class User {
 		ArrayList<Feedback> feedbacks = seller.getFeedbacks();
 		double sum = 0 ;
 		double feedbacksNumber = feedbacks.size();
-                int diff; 
+        int diff; 
 		int sameCategory;
-                int sameProduct;
-                double timeImportance;
+        int sameProduct;
+        double timeImportance;
                 
                         
 		for(Feedback feedback: feedbacks){
