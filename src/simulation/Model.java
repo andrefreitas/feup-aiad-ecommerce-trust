@@ -130,13 +130,16 @@ public class Model extends SimModelImpl {
 				return agentList.size();
 			}
 		});
-		// plot number of agents with the most abundant color
-		plot.addSequence("Global Trust", new Sequence() {
-			public double getSValue() {
-				return agentList.get(0).computeGlobalTrust();
-			}
-		});
-		plot.display();
+		for (int i = 0; i < agentList.size(); i++) {
+			final int j = i;
+			// plot number of agents with the most abundant color
+			plot.addSequence("Global Trust", new Sequence() {
+				public double getSValue() {
+					return agentList.get(j).computeGlobalTrust();
+				}
+			});
+			plot.display();
+		}
 
 	}
 
