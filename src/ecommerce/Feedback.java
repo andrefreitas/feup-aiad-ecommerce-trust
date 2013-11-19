@@ -1,49 +1,49 @@
 package ecommerce;
 
-public class Feedback {	
-	private Product product;
-	private int score;
-	private int timeTick; 		
-	private User buyer;
-	
-	public Feedback(Product product, int score, int timeTick, User buyer){
-		this.setProduct(product);
-		this.setScore(score);
-		this.setTimeTick(timeTick);
-		this.setBuyer(buyer);
-	}
+public class Feedback {
 
-	public Product getProduct() {
-		return product;
-	}
+    private Product product;
+    private int score;
+    private int timeTick;
+    private User buyer;
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+    public Feedback(Product product, int score, int timeTick, User buyer) {
+        this.setProduct(product);
+        this.setScore(score);
+        this.setTimeTick(timeTick);
+        this.setBuyer(buyer);
+    }
 
-	public int getScore() {
-		return score;
-	}
+    public Product getProduct() {
+        return product;
+    }
 
-	public void setScore(int score) {
-		this.score = score;
-	}
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
-	public int getTimeTick() {
-		return timeTick;
-	}
+    public int getScore() {
+        return score;
+    }
 
-	public void setTimeTick(int timeTick) {
-		this.timeTick = timeTick;
-	}
+    public void setScore(int score) {
+        this.score = score;
+    }
 
-	public User getBuyer() {
-		return buyer;
-	}
+    public int getTimeTick() {
+        return timeTick;
+    }
 
-	public void setBuyer(User buyer) {
-		this.buyer = buyer;
-	}
-	
-	
+    public void setTimeTick(int timeTick) {
+        this.timeTick = timeTick;
+    }
+
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
 }
