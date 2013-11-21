@@ -29,6 +29,7 @@ import uchicago.src.sim.util.SimUtilities;
 public class Model extends SimModelImpl {
 
     private ArrayList<Agent> agentList;
+    private ArrayList<Trust> trustList;
     private Schedule schedule;
     private DisplaySurface dsurf;
     private Object2DTorus space;
@@ -93,6 +94,7 @@ public class Model extends SimModelImpl {
 
     public void buildModel() {
         agentList = new ArrayList<>();
+        trustList = new ArrayList<>();
         space = new Object2DTorus(spaceSize, spaceSize);
         node1 = new DefaultNode();
         node2 = new DefaultNode();
@@ -101,14 +103,19 @@ public class Model extends SimModelImpl {
         int x = 10;
         int y = 10;
         Random rand = new Random();
+        Agent agent;
+        Trust trust;
         for (int i = 0; i < this.numberOfAgents; i++) {
-            Agent agent1 = new Agent(x + 8, y + 8, Color.red, space, "Agent" + i, "Portugal");
-            agent1.setGlobalTrust(rand.nextDouble()*5);
-            agentList.add(agent1);
-            space.putObjectAt(10, 10, graphic);
-            x = x + 8;
-            y = y + 8;
+            agent = new Agent(x + 10, y + 10, Color.red, space, "Agent" + i, "Portugal");
+            double global_trust = rand.nextDouble()*5;
+            agent.setGlobalTrust(global_trust);
+            agentList.add(agent);
+            trust = new Trust(x+20, y+12, global_trust);
+            trustList.add(trust);
+            x = x + 10;
+            y = y + 10;
         }
+         
 
     }
 
@@ -127,9 +134,7 @@ public class Model extends SimModelImpl {
         
         // Trusts
         Object2DDisplay display2 = new Object2DDisplay(space);
-        ArrayList<Trust> t = new ArrayList<Trust>();
-        t.add(new Trust(30, 20, "2"));
-        display2.setObjectList(t);
+        display2.setObjectList(trustList);
         dsurf.addDisplayableProbeable(display2, "Trust Space");
         
         dsurf.setSize(200, 200);

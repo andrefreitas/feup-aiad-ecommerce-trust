@@ -2,6 +2,7 @@ package simulation;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,33 +15,42 @@ import uchicago.src.sim.gui.SimGraphics;
 
 public class Trust implements Drawable {
 	
-	private String value;
+	private double value;
 	private int x;
 	private int y;
 	
-	Trust(int x, int y, String value) {
+	Trust(int x, int y, double value) {
 		this.x = x;
         this.y = y;
-		this.value = value;
+        
+		this.value = Math.round(value * 100.0) / 100.0;
 	}
 
-	public String getValue() {
+	public double getValue() {
 		return value;
+	}
+	
+	public void setValue(double value) {
+		this.value = value;
 	}
 	
 	@Override
 	public void draw(SimGraphics g) {
-		/*Font font = new Font("sans-serif", Font.BOLD, 12);
-	    
+		Font font = new Font("Arial", Font.PLAIN, 18);
+
 	    g.setFont(font);
-		//g.drawCircle(Color.red);
-		g.drawString(value, Color.white);*/
-		int fontSize = 20;
-		//g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-	     
-	    
-	    
-	    g.drawString("2", Color.white);
+	    g.setDrawingParameters(50, 20, 1);
+	    Color rect_color;
+	    if (Math.floor(value) < 3) {
+	    	rect_color = Color.red;
+	    }
+	    else if (Math.floor(value) == 3) {
+	    	rect_color = Color.yellow;
+	    }
+	    else {
+	    	rect_color = Color.green;
+	    }
+		g.drawStringInRoundRect(rect_color, Color.black, String.valueOf(value));
 		
 	}
 
