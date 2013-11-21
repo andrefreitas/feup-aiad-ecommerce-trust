@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Random;
 
 import uchicago.src.repastdemos.sugarscape.SugarAgent;
 import uchicago.src.sim.analysis.BinDataSource;
@@ -38,7 +39,7 @@ public class Model extends SimModelImpl {
     private int numberOfAgents, spaceSize;
 
     public Model() {
-        this.numberOfAgents = 10;
+        this.numberOfAgents = 2;
         this.spaceSize = 100;
     }
 
@@ -100,12 +101,13 @@ public class Model extends SimModelImpl {
 
         int x = 10;
         int y = 10;
+        Random rand = new Random();
         for (int i = 0; i < this.numberOfAgents; i++) {
             Agent agent1 = new Agent(x + 8, y + 8, Color.red, space, "Agent" + i, "Portugal");
+            agent1.setGlobalTrust(rand.nextDouble()*5);
             agentList.add(agent1);
-            // TODO: draw number and circle - function found but not working
+            
             space.putObjectAt(10, 10, graphic);
-            System.out.println(agent1.computeGlobalTrust());
             x = x + 8;
             y = y + 8;
         }
@@ -146,33 +148,29 @@ public class Model extends SimModelImpl {
             plot.addSequence("Global Trust", new Sequence() {
                 @Override
                 public double getSValue() {
-                    return agentList.get(j).computeGlobalTrust();
+                	return agentList.get(j).getGlobalTrust();             
                 }
             });
             plot.display();
         }
-
     }
 
     private void buildSchedule() {
         schedule.scheduleActionBeginning(0, new MainAction());
         schedule.scheduleActionAtInterval(1, dsurf, "updateDisplay", Schedule.LAST);
         schedule.scheduleActionAtInterval(1, plot, "step", Schedule.LAST);
+
     }
 
     class MainAction extends BasicAction {
-
         public void execute() {
-            // shuffle agents
-            SimUtilities.shuffle(agentList);
+
         }
     }
 
     public static void main(String[] args) {
         SimInit init = new SimInit();
         init.loadModel(new Model(), null, false);
-        //SimInit init2 = new SimInit();
-        //init.loadModel(new Model(), null, false);
     }
 
 }

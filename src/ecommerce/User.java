@@ -2,6 +2,7 @@ package ecommerce;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
 public class User {
 
@@ -9,10 +10,11 @@ public class User {
     protected String country;
     protected ArrayList<Feedback> feedbacks;
     protected ArrayList<Product> products;
-    protected Hashtable<String, Double> trust;
+    protected Hashtable<String, Double> trust; //matchs category to trust
     protected static final double CATEGORY_BONUS = 0.1;
     protected static final double PRODUCT_BONUS = 0.3;
     protected static final double NEW_FEEDBACK_VALUE = 2;
+    protected double global_trust = 0;
 
     public User(String name, String country) {
         this.name = name;
@@ -36,6 +38,14 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
+    
+    public double getGlobalTrust() {
+    	return global_trust;
+    }
+    
+    public void setGlobalTrust(double global_trust) {
+    	this.global_trust = global_trust;
+    }
 
     public void addFeedback(String productName, String productCategory, int rating, int ticks,
             User buyer) {
@@ -54,22 +64,9 @@ public class User {
         } catch (Exception e) {
             this.trust.put(key, (double) rating);
         }
-
-    }
-
-    public double computeGlobalTrust() {
-        int feedbacks_size = this.feedbacks.size();
-        if (feedbacks_size > 0) {
-            double sum = 0;
-            for (Feedback feedback : this.feedbacks) {
-                sum = sum + feedback.getScore();
-            }
-
-            return (sum / this.feedbacks.size());
-        } else {
-            return 0;
-        }
-
+        
+        // Sets up a new global_trust
+        global_trust = (global_trust + rating)/2.0;
     }
 
     public double computeTrust(User seller, String productCategory, String productName) {
