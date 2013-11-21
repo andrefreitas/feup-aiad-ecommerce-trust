@@ -2,7 +2,6 @@ package ecommerce;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Random;
 
 public class User {
 
@@ -19,8 +18,8 @@ public class User {
     public User(String name, String country) {
         this.name = name;
         this.country = country;
-        this.feedbacks = new ArrayList<Feedback>();
-        this.trust = new Hashtable<String, Double>();
+        this.feedbacks = new ArrayList<>();
+        this.trust = new Hashtable<>();
     }
 
     public String getName() {
@@ -113,17 +112,20 @@ public class User {
              * Ler pagina do wikipedia em medias pesadas
              * http://en.wikipedia.org/wiki/Weighted_arithmetic_mean#Mathematical_definition
              */
-            if (sameCategory == 0) {
+            /*if (sameCategory == 0) {
                 score = score * (1 - CATEGORY_BONUS);
             } else if (sameProduct == 0) {
                 score = score * (1 - PRODUCT_BONUS);
-            }
+            }*/
 
             // Time relevance
-            score += feedback.getScore() * timeImportance;
-
+            if (sameCategory == 1){
+                score += feedback.getScore() * timeImportance;
+                feedbacksNumber += timeImportance;
+            }
+            
             sum += score;
-            feedbacksNumber += 1 + timeImportance;
+            feedbacksNumber += 1;
 
         }
 
