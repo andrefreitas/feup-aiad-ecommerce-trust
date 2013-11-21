@@ -1,6 +1,8 @@
 package simulation;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -27,11 +29,9 @@ import uchicago.src.sim.util.SimUtilities;
 public class Model extends SimModelImpl {
 
     private ArrayList<Agent> agentList;
-    private Hashtable<Agent, Double> trust;
     private Schedule schedule;
     private DisplaySurface dsurf;
     private Object2DTorus space;
-    private DefaultDrawableEdge network;
     private DefaultNode node1;
     private DefaultNode node2;
     private SimGraphics graphic;
@@ -96,7 +96,6 @@ public class Model extends SimModelImpl {
         space = new Object2DTorus(spaceSize, spaceSize);
         node1 = new DefaultNode();
         node2 = new DefaultNode();
-        network = new DefaultDrawableEdge(node1, node2);
         graphic = new SimGraphics();
 
         int x = 10;
@@ -106,7 +105,6 @@ public class Model extends SimModelImpl {
             Agent agent1 = new Agent(x + 8, y + 8, Color.red, space, "Agent" + i, "Portugal");
             agent1.setGlobalTrust(rand.nextDouble()*5);
             agentList.add(agent1);
-            
             space.putObjectAt(10, 10, graphic);
             x = x + 8;
             y = y + 8;
@@ -126,6 +124,14 @@ public class Model extends SimModelImpl {
         Object2DDisplay display = new Object2DDisplay(space);
         display.setObjectList(agentList);
         dsurf.addDisplayableProbeable(display, "Agents Space");
+        
+        // Trusts
+        Object2DDisplay display2 = new Object2DDisplay(space);
+        ArrayList<Trust> t = new ArrayList<Trust>();
+        t.add(new Trust(30, 20, "2"));
+        display2.setObjectList(t);
+        dsurf.addDisplayableProbeable(display2, "Trust Space");
+        
         dsurf.setSize(200, 200);
         dsurf.display();
 
@@ -154,6 +160,7 @@ public class Model extends SimModelImpl {
             plot.display();
         }
     }
+    
 
     private void buildSchedule() {
         schedule.scheduleActionBeginning(0, new MainAction());
