@@ -2,15 +2,10 @@ package simulation;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Random;
 
-import uchicago.src.repastdemos.sugarscape.SugarAgent;
-import uchicago.src.sim.analysis.BinDataSource;
-import uchicago.src.sim.analysis.OpenHistogram;
 import uchicago.src.sim.analysis.OpenSequenceGraph;
-import uchicago.src.sim.analysis.Plot;
 import uchicago.src.sim.analysis.Sequence;
 import uchicago.src.sim.engine.BasicAction;
 import uchicago.src.sim.engine.Schedule;
@@ -22,7 +17,6 @@ import uchicago.src.sim.gui.SimGraphics;
 import uchicago.src.sim.network.DefaultDrawableEdge;
 import uchicago.src.sim.network.DefaultNode;
 import uchicago.src.sim.space.Object2DTorus;
-import uchicago.src.sim.util.SimUtilities;
 
 public class Model extends SimModelImpl {
 
