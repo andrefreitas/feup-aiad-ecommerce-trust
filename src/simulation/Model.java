@@ -1,12 +1,16 @@
 package simulation;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
 
+import uchicago.src.repastdemos.neuralfromfile.AgentSelectorDialog;
 import uchicago.src.sim.analysis.OpenSequenceGraph;
 import uchicago.src.sim.analysis.Sequence;
 import uchicago.src.sim.engine.BasicAction;
@@ -36,6 +40,7 @@ public class Model extends SimModelImpl {
     public Model() {
         this.numberOfAgents = 2;
         this.spaceSize = 100;
+        modelManipulator.init();
     }
 
     @Override
@@ -45,7 +50,7 @@ public class Model extends SimModelImpl {
 
     @Override
     public String[] getInitParam() {
-        return new String[]{"numberOfAgents", "spaceSize", "movingMode"};
+        return new String[]{"numberOfAgents", "spaceSize"};
     }
 
     @Override
@@ -77,6 +82,12 @@ public class Model extends SimModelImpl {
         }
         dsurf = new DisplaySurface(this, "Ecommerce Trust Simulation");
         registerDisplaySurface("Ecommerce Trust Simulation", dsurf);
+        modelManipulator.addButton("Agente ", new ActionListener() {
+        	  @Override
+        	  public void actionPerformed(ActionEvent evt) {
+    		    System.out.println(agentList.get(0).getGlobalTrust());
+    		  }
+    		});
     }
 
     @Override
@@ -101,16 +112,14 @@ public class Model extends SimModelImpl {
         Trust trust;
         for (int i = 0; i < this.numberOfAgents; i++) {
             agent = new Agent(x + 10, y + 10, Color.red, space, "Agent" + i, "Portugal");
-            double global_trust = rand.nextDouble()*5;
+            final double global_trust = rand.nextDouble()*5;
             agent.setGlobalTrust(global_trust);
             agentList.add(agent);
             trust = new Trust(x+20, y+12, global_trust);
             trustList.add(trust);
             x = x + 10;
             y = y + 10;
-        }
-         
-
+        }  
     }
 
     private void buildDisplay() {
@@ -158,6 +167,7 @@ public class Model extends SimModelImpl {
             });
             plot.display();
         }
+        
     }
     
 

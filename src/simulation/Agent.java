@@ -2,6 +2,8 @@ package simulation;
 
 import ecommerce.*;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +14,7 @@ import uchicago.src.sim.gui.Drawable;
 import uchicago.src.sim.gui.SimGraphics;
 import uchicago.src.sim.space.Object2DTorus;
 
-public class Agent extends User implements Drawable {
+public class Agent extends User implements Drawable{
 
     private int x, y;
     private Color color;
@@ -50,5 +52,4 @@ public class Agent extends User implements Drawable {
     public Color getColor() {
         return color;
     }
-
 }
