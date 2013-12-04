@@ -1,0 +1,85 @@
+{
+  "users": [
+    {
+      "name": "Petter Griffin",
+      "country": "usa"
+    },
+    {
+      "name": "Chris Griffin",
+      "country": "usa"
+    },
+    {
+      "name": "Lois Griffin",
+      "country": "usa"
+    },
+    {
+      "name": "Meg Griffin",
+      "country": "usa"
+    },
+    {
+      "name": "Brian Griffin",
+      "country": "usa"
+    },
+    {
+      "name": "Stewie Griffin",
+      "country": "usa"
+    },
+    {
+      "name": "Cleveland Brown",
+      "country": "usa"
+    },
+    {
+      "name": "Glenn Quagmire",
+      "country": "usa"
+    },
+    {
+      "name": "Joe Swanson",
+      "country": "usa"
+    }
+  ],
+  "categories": [
+    {
+      "name": "computers",
+      "products": [
+        "Asus ZenBook",
+        "Apple Macbook Air 13",
+        "Apple iMac 27",
+        "Apple Macbook Pro 15",
+        "Lenovo ThinkPad"
+      ]
+    },
+    {
+      "name": "phones",
+      "products": [
+        "Samsung Galaxy S4",
+        "iPhone 5s",
+        "Nokia Lumia 920",
+        "Google Nexus 4",
+        "Sony Xperia Z",
+        "Sony Xperia S"
+      ]
+    },
+    {
+      "name": "tablets",
+      "products": [
+        "iPad Air",
+        "iPad Mini Retina",
+        "iPad Mini",
+        "Google Nexus 7",
+        "Windows Surface RT",
+        "Windows Surface"
+      ]
+    },
+    {
+      "name": "keyboards",
+      "products": [
+        "Logitech Classic Keyboard",
+        "Apple Keyboard Wireless",
+        "IBM Model M",
+        "NGS Keyboard",
+        "Trust Keyboard S",
+        "Sony Experience Pad"
+      ]
+    }
+  ]
+}
