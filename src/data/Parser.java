@@ -6,16 +6,20 @@ package data;
 import com.google.gson.*;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.*;
+import ecommerce.*;
 
 public class Parser {
 
-    public ArrayList<Map<String, String[]>[]> users;
-    public Map<String, String[]> categories;
+    public ArrayList<User> users;
+    public ArrayList<Product> products;
     public String fileName;
+    public JsonElement parseTree;
 
     public Parser(String fileName) {
         this.fileName = fileName;
+        parse();
     }
 
     public void parse() {
@@ -27,19 +31,61 @@ public class Parser {
             fis.close();
             String s = new String(data, "UTF-8");
             JsonParser gParser = new JsonParser();
-            JsonElement parseTree = gParser.parse(s);
+            parseTree = gParser.parse(s);
+            parseUsers();
+            parseProducts();
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
 
     }
+    
+    public void parseUsers(){
+       JsonObject jsonObject = parseTree.getAsJsonObject();
+       JsonArray users = jsonObject.get("users").getAsJsonArray();
+       Iterator<JsonElement> usersIterator = users.iterator();
+       String name;
+       String country;
+       this.users = new ArrayList<User>();
+       
+       while (usersIterator.hasNext()){
+           JsonObject user = usersIterator.next().getAsJsonObject();
+           name = user.get("name").toString();
+           country = user.get("country").toString();
+           this.users.add(new User(name, country));
+       }
+    }
+    
+    public void parseProducts() {
+        JsonObject jsonObject = parseTree.getAsJsonObject();
+        JsonArray categories = jsonObject.get("categories").getAsJsonArray();
+        Iterator<JsonElement> categoriesIterator = categories.iterator();
+        this.products = new ArrayList<Product>();
+        
+        
+        while(categoriesIterator.hasNext()) {
+            JsonObject category = categoriesIterator.next().getAsJsonObject();
+            String categoryName = category.get("name").toString();
+            JsonArray products = category.getAsJsonArray("products");
+            Iterator<JsonElement> productsIterator = products.iterator();
+            
+            while(productsIterator.hasNext()){
+                JsonObject product = productsIterator.next().getAsJsonObject();
+                String productName = product.getAsString(); 
+                this.products.add(new Product(productName, categoryName));
+                
+            }
+            
+        }
+    }
+    
+    public ArrayList<User> getUsers() {
+        return users;
+    }
 
     public static void main(String args[]) {
         Parser p = new Parser("data.json");
-        System.out.println("Starting to parse");
-        p.parse();
-        System.out.println("Parsed");
     }
 
 }
