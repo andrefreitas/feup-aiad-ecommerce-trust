@@ -51,8 +51,8 @@ public class Parser {
        
        while (usersIterator.hasNext()){
            JsonObject user = usersIterator.next().getAsJsonObject();
-           name = user.get("name").toString();
-           country = user.get("country").toString();
+           name = user.get("name").getAsString();
+           country = user.get("country").getAsString();
            this.users.add(new User(name, country));
        }
     }
@@ -66,15 +66,13 @@ public class Parser {
         
         while(categoriesIterator.hasNext()) {
             JsonObject category = categoriesIterator.next().getAsJsonObject();
-            String categoryName = category.get("name").toString();
+            String categoryName = category.get("name").getAsString();
             JsonArray products = category.getAsJsonArray("products");
             Iterator<JsonElement> productsIterator = products.iterator();
             
             while(productsIterator.hasNext()){
-                JsonObject product = productsIterator.next().getAsJsonObject();
-                String productName = product.getAsString(); 
+                String productName = productsIterator.next().getAsString(); 
                 this.products.add(new Product(productName, categoryName));
-                
             }
             
         }
@@ -83,9 +81,15 @@ public class Parser {
     public ArrayList<User> getUsers() {
         return users;
     }
+    
+    public ArrayList<Product> getProducts() {
+        return products;
+    }   
 
     public static void main(String args[]) {
         Parser p = new Parser("data.json");
+        System.out.println(p.getProducts());
+        System.out.println(p.getUsers());
     }
 
 }

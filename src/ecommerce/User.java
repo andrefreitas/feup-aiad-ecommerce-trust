@@ -132,5 +132,9 @@ public class User {
         double average = sum / feedbacksNumber;
         return average;
     }
+    
+    public String toString(){
+        return "Name: " + name + ", Country: " + country;
+    }
 
 }

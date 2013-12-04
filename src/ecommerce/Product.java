@@ -25,5 +25,9 @@ public class Product {
     public void setCategory(String category) {
         this.category = category;
     }
+    
+    public String toString() {
+        return "Product: " + name + ", Category: " +  category;
+    }
 
 }
