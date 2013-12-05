@@ -19,7 +19,8 @@ public class Agent extends User implements Drawable{
     private int x, y;
     private Color color;
     private Object2DTorus space;
-
+    private Trust trust;
+    
     public Agent(int x, int y, Color color, Object2DTorus space, String name, String country) {
         super(name, country);
         this.x = x;
@@ -51,5 +52,13 @@ public class Agent extends User implements Drawable{
 
     public Color getColor() {
         return color;
+    }
+    
+    public void setTrust(Trust t){
+        trust = t;
+    }
+    
+    public void setTrustValue(double v){
+        trust.setValue(v);
     }
 }

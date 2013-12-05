@@ -24,10 +24,15 @@ import uchicago.src.sim.network.DefaultDrawableEdge;
 import uchicago.src.sim.network.DefaultNode;
 import uchicago.src.sim.space.Object2DTorus;
 
+import data.*;
+import ecommerce.*;
+
 public class Model extends SimModelImpl {
 
     private ArrayList<Agent> agentList;
     private ArrayList<Trust> trustList;
+    private ArrayList<Product> products;
+    
     private Schedule schedule;
     private DisplaySurface dsurf;
     private Object2DTorus space;
@@ -38,8 +43,8 @@ public class Model extends SimModelImpl {
     private int numberOfAgents, spaceSize;
 
     public Model() {
-        this.numberOfAgents = 2;
-        this.spaceSize = 100;
+        numberOfAgents = 2;
+        spaceSize = 100;
         modelManipulator.init();
     }
 
@@ -104,22 +109,41 @@ public class Model extends SimModelImpl {
         node1 = new DefaultNode();
         node2 = new DefaultNode();
         graphic = new SimGraphics();
-
-        int x = 10;
-        int y = 10;
+        Parser p = new Parser("data.json");
+        products = p.getProducts();
+        ArrayList<User> users = p.getUsers();
+        // Positions variables
+        int baseX = 8;
+        int baseY = 25;
+        int deltaX = 20;
+        int deltaY = 20;
+        int posX = 0;
+        int posY = 0;
+        int labelX = -1;
+        int labelY = 8;
         Random rand = new Random();
         Agent agent;
         Trust trust;
-        for (int i = 0; i < this.numberOfAgents; i++) {
-            agent = new Agent(x + 10, y + 10, Color.red, space, "Agent" + i, "Portugal");
-            final double global_trust = rand.nextDouble()*5;
-            agent.setGlobalTrust(global_trust);
+        int counter = 0;
+        
+        // Create agents
+        for(User user: users) {
+            // Update positions
+            posX = baseX + (counter % 5) * deltaX;
+            posY = baseY + (counter / 5) * deltaY;
+            
+            // Add agent
+            agent = new Agent(posX, posY, Color.red, space, user.getName(), user.getCountry());
             agentList.add(agent);
-            trust = new Trust(x+20, y+12, global_trust);
+            
+            // Set trust label
+            trust = new Trust(posX + labelX, posY + labelY, 0);
+            agent.setTrust(trust);
             trustList.add(trust);
-            x = x + 10;
-            y = y + 10;
-        }  
+            
+            counter++;
+            
+        } 
     }
 
     private void buildDisplay() {
