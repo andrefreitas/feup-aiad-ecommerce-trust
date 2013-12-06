@@ -1,38 +1,30 @@
 package simulation;
 
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Random;
 
-import uchicago.src.repastdemos.neuralfromfile.AgentSelectorDialog;
 import uchicago.src.sim.analysis.OpenSequenceGraph;
-import uchicago.src.sim.analysis.Sequence;
 import uchicago.src.sim.engine.BasicAction;
 import uchicago.src.sim.engine.Schedule;
 import uchicago.src.sim.engine.SimInit;
-import uchicago.src.sim.engine.SimModelImpl;
 import uchicago.src.sim.gui.DisplaySurface;
 import uchicago.src.sim.gui.Object2DDisplay;
 import uchicago.src.sim.gui.SimGraphics;
-import uchicago.src.sim.network.DefaultDrawableEdge;
 import uchicago.src.sim.network.DefaultNode;
 import uchicago.src.sim.space.Object2DTorus;
+import uchicago.src.sim.engine.SimpleModel;
 
 import data.*;
 import ecommerce.*;
 
-public class Model extends SimModelImpl {
+public class Model extends SimpleModel {
 
     private ArrayList<Agent> agentList;
     private ArrayList<Trust> trustList;
     private ArrayList<Product> products;
-    
     private Schedule schedule;
     private DisplaySurface dsurf;
     private Object2DTorus space;
@@ -43,7 +35,6 @@ public class Model extends SimModelImpl {
     private int numberOfAgents, spaceSize;
 
     public Model() {
-        numberOfAgents = 2;
         spaceSize = 100;
         modelManipulator.init();
     }
@@ -81,6 +72,9 @@ public class Model extends SimModelImpl {
 
     @Override
     public void setup() {
+        super.setup();
+        autoStep = true;
+        shuffle = true;
         schedule = new Schedule();
         if (dsurf != null) {
             dsurf.dispose();
@@ -112,6 +106,7 @@ public class Model extends SimModelImpl {
         Parser p = new Parser("data.json");
         products = p.getProducts();
         ArrayList<User> users = p.getUsers();
+        numberOfAgents = users.size();
         // Positions variables
         int baseX = 8;
         int baseY = 25;
@@ -145,7 +140,7 @@ public class Model extends SimModelImpl {
             
         } 
     }
-
+    
     private void buildDisplay() {
         // Background
         Object2DDisplay background = new Object2DDisplay(space);
@@ -167,44 +162,22 @@ public class Model extends SimModelImpl {
         dsurf.setSize(200, 200);
         dsurf.display();
 
-        // graph
-        if (plot != null) {
-            plot.dispose();
-        }
-        plot = new OpenSequenceGraph("Colors and Agents", this);
-        plot.setAxisTitles("time", "n");
-        // plot number of different existing colors
-        plot.addSequence("Agent List size", new Sequence() {
-            @Override
-            public double getSValue() {
-                return agentList.size();
-            }
-        });
-        for (int i = 0; i < agentList.size(); i++) {
-            final int j = i;
-            // plot number of agents with the most abundant color
-            plot.addSequence("Global Trust", new Sequence() {
-                @Override
-                public double getSValue() {
-                	return agentList.get(j).getGlobalTrust();             
-                }
-            });
-            plot.display();
-        }
-        
+
     }
     
-
-    private void buildSchedule() {
-        schedule.scheduleActionBeginning(0, new MainAction());
-        schedule.scheduleActionAtInterval(1, dsurf, "updateDisplay", Schedule.LAST);
-        schedule.scheduleActionAtInterval(1, plot, "step", Schedule.LAST);
-
+    @Override
+    public void buildSchedule() {
+        schedule.scheduleActionAtInterval(1, new SimulateFeedback());
     }
-
-    class MainAction extends BasicAction {
+    
+    class SimulateFeedback extends BasicAction {
         public void execute() {
-
+            double ticks = getTickCount();
+            // select a seller randomly
+            // select a buyer randomly
+            // select a product randomly
+            // find a score randomly
+            // give feedback
         }
     }
 

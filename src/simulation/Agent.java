@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import uchicago.src.sim.gui.Drawable;
 import uchicago.src.sim.gui.SimGraphics;
 import uchicago.src.sim.space.Object2DTorus;
+import uchicago.src.sim.engine.Stepable;
 
 public class Agent extends User implements Drawable{
 
