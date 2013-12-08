@@ -7,6 +7,8 @@ public class User {
 
     protected String name;
     protected String country;
+    protected String behaviour;
+    protected ArrayList<String> categories;
     protected ArrayList<Feedback> feedbacks;
     protected ArrayList<Product> products;
     protected Hashtable<String, Double> trust; //matchs category to trust
@@ -38,8 +40,24 @@ public class User {
         this.country = country;
     }
     
+    public void setBehaviour(String behaviour) {
+        this.behaviour = behaviour;
+    }
+    
+    public void setCategories(ArrayList<String> categories){
+        this.categories = categories;
+    }
+    
     public double getGlobalTrust() {
     	return global_trust;
+    }
+    
+    public String getBehaviour() {
+        return behaviour;
+    }
+    
+    public ArrayList<String> getCategories() {
+        return categories;
     }
     
     public void setGlobalTrust(double global_trust) {
@@ -133,8 +151,13 @@ public class User {
         return average;
     }
     
+    @Override
     public String toString(){
-        return "Name: " + name + ", Country: " + country;
+        String out =  "Name: " + name + ", Country: " + country + ", Categories: ";
+        for(String category: categories){
+            out += category + " ";
+        }
+        return out;
     }
 
 }

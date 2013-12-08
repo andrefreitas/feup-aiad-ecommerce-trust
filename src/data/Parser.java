@@ -47,13 +47,27 @@ public class Parser {
        Iterator<JsonElement> usersIterator = users.iterator();
        String name;
        String country;
+       String behaviour;
        this.users = new ArrayList<User>();
        
        while (usersIterator.hasNext()){
            JsonObject user = usersIterator.next().getAsJsonObject();
            name = user.get("name").getAsString().trim();
            country = user.get("country").getAsString().trim();
-           this.users.add(new User(name, country));
+           behaviour = user.get("behaviour").getAsString().trim();
+           User u = new User(name, country);
+           u.setBehaviour(behaviour);
+           // Parse categories
+           String category;
+           ArrayList<String> categoriesList = new ArrayList();
+           JsonArray categories = user.get("categories").getAsJsonArray();
+           Iterator<JsonElement> categoriesIterator = categories.iterator();
+           while(categoriesIterator.hasNext()) {
+               category = categoriesIterator.next().getAsString();
+               categoriesList.add(category);
+           }
+           u.setCategories(categoriesList);
+           this.users.add(u);
        }
     }
     
@@ -61,7 +75,7 @@ public class Parser {
         JsonObject jsonObject = parseTree.getAsJsonObject();
         JsonArray categories = jsonObject.get("categories").getAsJsonArray();
         Iterator<JsonElement> categoriesIterator = categories.iterator();
-        this.products = new ArrayList<Product>();
+        this.products = new ArrayList<>();
         
         
         while(categoriesIterator.hasNext()) {

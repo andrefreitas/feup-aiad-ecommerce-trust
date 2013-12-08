@@ -2,39 +2,57 @@
   "users": [
     {
       "name": "Petter Griffin",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "bad",
+      "categories" : ["computers", "tablets"]
     },
     {
       "name": "Chris Griffin",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "normal",
+      "categories" : ["phones"]
     },
     {
       "name": "Lois Griffin",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "good",
+      "categories" : ["keyboards"]
     },
     {
       "name": "Meg Griffin",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "good",
+      "categories" : ["tablets"]
     },
     {
       "name": "Brian Griffin",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "normal",
+      "categories" : ["phones"]
     },
     {
       "name": "Stewie Griffin",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "bad",
+      "categories" : ["computers"]
     },
     {
       "name": "Cleveland Brown",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "normal",
+      "categories" : ["phones"]
     },
     {
       "name": "Glenn Quagmire",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "bad",
+      "categories" : ["computers","keyboards"]
     },
     {
       "name": "Joe Swanson",
-      "country": "usa"
+      "country": "usa",
+      "behaviour" : "good",
+      "categories" : ["phones", "tablets"]
     }
   ],
   "categories": [
