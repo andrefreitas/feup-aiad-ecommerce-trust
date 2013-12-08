@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -22,8 +23,10 @@ public class Agent extends User implements Drawable{
     private Object2DTorus space;
     private Trust trust;
     
-    public Agent(int x, int y, Color color, Object2DTorus space, String name, String country) {
+    public Agent(int x, int y, Color color, Object2DTorus space, String name, String country, String behaviour, ArrayList<String> categories) {
         super(name, country);
+        this.behaviour = behaviour;
+        this.categories = categories;
         this.x = x;
         this.y = y;
         this.color = color;

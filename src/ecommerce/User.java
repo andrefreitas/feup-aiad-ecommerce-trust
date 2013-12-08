@@ -22,6 +22,7 @@ public class User {
         this.country = country;
         this.feedbacks = new ArrayList<>();
         this.trust = new Hashtable<>();
+        this.categories = new ArrayList();
     }
 
     public String getName() {
@@ -56,6 +57,9 @@ public class User {
         return behaviour;
     }
     
+    public void addCategory(String category){
+        categories.add(category);
+    }
     public ArrayList<String> getCategories() {
         return categories;
     }

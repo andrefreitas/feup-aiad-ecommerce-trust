@@ -19,6 +19,10 @@ import uchicago.src.sim.engine.SimpleModel;
 
 import data.*;
 import ecommerce.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Model extends SimpleModel {
 
@@ -82,11 +86,11 @@ public class Model extends SimpleModel {
         dsurf = new DisplaySurface(this, "Ecommerce Trust Simulation");
         registerDisplaySurface("Ecommerce Trust Simulation", dsurf);
         modelManipulator.addButton("Agente ", new ActionListener() {
-        	  @Override
-        	  public void actionPerformed(ActionEvent evt) {
-    		    System.out.println(agentList.get(0).getGlobalTrust());
-    		  }
-    		});
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                System.out.println(agentList.get(0).getGlobalTrust());
+            }
+        });
     }
 
     @Override
@@ -120,27 +124,27 @@ public class Model extends SimpleModel {
         Agent agent;
         Trust trust;
         int counter = 0;
-        
+
         // Create agents
-        for(User user: users) {
+        for (User user : users) {
             // Update positions
             posX = baseX + (counter % 5) * deltaX;
             posY = baseY + (counter / 5) * deltaY;
-            
+
             // Add agent
-            agent = new Agent(posX, posY, Color.red, space, user.getName(), user.getCountry());
+            agent = new Agent(posX, posY, Color.red, space, user.getName(), user.getCountry(), user.getBehaviour(), user.getCategories());
             agentList.add(agent);
-            
+
             // Set trust label
             trust = new Trust(posX + labelX, posY + labelY, 0);
             agent.setTrust(trust);
             trustList.add(trust);
-            
+
             counter++;
-            
-        } 
+
+        }
     }
-    
+
     private void buildDisplay() {
         // Background
         Object2DDisplay background = new Object2DDisplay(space);
@@ -153,31 +157,96 @@ public class Model extends SimpleModel {
         Object2DDisplay display = new Object2DDisplay(space);
         display.setObjectList(agentList);
         dsurf.addDisplayableProbeable(display, "Agents Space");
-        
+
         // Trusts
         Object2DDisplay display2 = new Object2DDisplay(space);
         display2.setObjectList(trustList);
         dsurf.addDisplayableProbeable(display2, "Trust Space");
-        
+
         dsurf.setSize(200, 200);
         dsurf.display();
 
-
     }
-    
+
     @Override
     public void buildSchedule() {
         schedule.scheduleActionAtInterval(1, new SimulateFeedback());
     }
-    
+
+    private Agent selectRandomAgent(Set<Agent> removeAgents) {
+        Set set = new HashSet(agentList);
+        set.removeAll(removeAgents);
+        ArrayList<Agent> agentList = new ArrayList(set);
+        int randomIndex = (int) (Math.random() * (agentList.size()));
+        Agent randomAgent = agentList.get(randomIndex);
+        return randomAgent;
+    }
+
+    private Product selectProduct(Agent buyer, Agent seller) {
+        Set sellerCategories = new HashSet(seller.getCategories());
+        ArrayList<Product> selectedProducts = new ArrayList();
+        for (Product product : products) {
+            if (sellerCategories.contains(product.getCategory())) {
+                selectedProducts.add(product);
+            }
+        }
+        int randomIndex = (int) (Math.random() * (selectedProducts.size()));
+        Product randomProduct = selectedProducts.get(randomIndex);
+        return randomProduct;
+
+    }
+
+    int generateScore(Agent buyer, Agent seller) {
+        String behaviour = seller.getBehaviour();
+        int score = 0;
+        int max = 0;
+        int min = 0;
+        if (behaviour.equals("bad")) {
+            min = 0;
+            max = 3;
+
+        } else if (behaviour.equals("normal")) {
+            min = 3;
+            max = 4;
+        } else if (behaviour.equals("good")) {
+            min = 4;
+            max = 5;
+        }
+        score = min + (int) (Math.random() * ((max - min) + 1));
+        return score;
+    }
+
     class SimulateFeedback extends BasicAction {
+
         public void execute() {
             double ticks = getTickCount();
-            // select a seller randomly
-            // select a buyer randomly
-            // select a product randomly
-            // find a score randomly
-            // give feedback
+            double feedbacksNumber = 1 + (int) (Math.random() * ((4 - 1) + 1));
+            for (int i = 0; i < feedbacksNumber; i++) {
+                // Give feedback
+                System.out.println("New Feedback -->");
+
+                // get a seller
+                Agent seller = selectRandomAgent(new HashSet<Agent>());
+                System.out.print("Seller : " + seller.getName());
+
+                // get a buyer
+                HashSet<Agent> sellerSet = new HashSet<Agent>();
+                sellerSet.add(seller);
+                Agent buyer = selectRandomAgent(sellerSet);
+                System.out.print(" Buyer: " + buyer.getName());
+
+                // select a product from the seller categories
+                Product product = selectProduct(buyer, seller);
+                System.out.print(" Product: " + product.getName());
+
+                // find a score randomly
+                int score = generateScore(buyer, seller);
+                System.out.println(" Score: " + score);
+
+                // give feedbackƒ
+                seller.addFeedback(product.getName(), product.getCategory(), score, (int) ticks, buyer);
+                System.out.println("Feedbacks: " + seller.getFeedbacks().size());
+            }
         }
     }
 

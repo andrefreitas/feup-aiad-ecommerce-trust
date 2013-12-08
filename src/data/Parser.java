@@ -59,14 +59,12 @@ public class Parser {
            u.setBehaviour(behaviour);
            // Parse categories
            String category;
-           ArrayList<String> categoriesList = new ArrayList();
            JsonArray categories = user.get("categories").getAsJsonArray();
            Iterator<JsonElement> categoriesIterator = categories.iterator();
            while(categoriesIterator.hasNext()) {
                category = categoriesIterator.next().getAsString();
-               categoriesList.add(category);
+               u.addCategory(category);
            }
-           u.setCategories(categoriesList);
            this.users.add(u);
        }
     }
