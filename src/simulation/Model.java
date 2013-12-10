@@ -160,9 +160,9 @@ public class Model extends SimpleModel {
         dsurf.addDisplayableProbeable(display, "Agents Space");
         
         // Trusts
-        Object2DDisplay display2 = new Object2DDisplay(space);
+        /*Object2DDisplay display2 = new Object2DDisplay(space);
         display2.setObjectList(trustList);
-        dsurf.addDisplayableProbeable(display2, "Trust Space");
+        dsurf.addDisplayableProbeable(display2, "Trust Space");*/
         dsurf.display();
 
     }
