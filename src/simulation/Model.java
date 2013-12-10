@@ -76,7 +76,7 @@ public class Model extends SimpleModel {
 
     @Override
     public void setup() {
-        super.setup();
+        //super.setup();
         autoStep = true;
         shuffle = true;
         schedule = new Schedule();
@@ -118,7 +118,7 @@ public class Model extends SimpleModel {
         int deltaY = 20;
         int posX = 0;
         int posY = 0;
-        int labelX = -1;
+        int labelX = 2;
         int labelY = 8;
         Random rand = new Random();
         Agent agent;
@@ -133,6 +133,7 @@ public class Model extends SimpleModel {
 
             // Add agent
             agent = new Agent(posX, posY, Color.red, space, user.getName(), user.getCountry(), user.getBehaviour(), user.getCategories());
+            space.putObjectAt(posX, posY, agent);
             agentList.add(agent);
 
             // Set trust label
@@ -157,20 +158,19 @@ public class Model extends SimpleModel {
         Object2DDisplay display = new Object2DDisplay(space);
         display.setObjectList(agentList);
         dsurf.addDisplayableProbeable(display, "Agents Space");
-
+        
         // Trusts
         Object2DDisplay display2 = new Object2DDisplay(space);
         display2.setObjectList(trustList);
         dsurf.addDisplayableProbeable(display2, "Trust Space");
-
-        dsurf.setSize(200, 200);
         dsurf.display();
 
     }
 
     @Override
     public void buildSchedule() {
-        schedule.scheduleActionAtInterval(1, new SimulateFeedback());
+        //schedule.scheduleActionAtInterval(1, new SimulateFeedback());
+        schedule.scheduleActionAtInterval(1, dsurf, "updateDisplay", Schedule.LAST);
     }
 
     private Agent selectRandomAgent(Set<Agent> removeAgents) {

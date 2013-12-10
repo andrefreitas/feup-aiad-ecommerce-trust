@@ -36,10 +36,10 @@ public class Trust implements Drawable {
 	
 	@Override
 	public void draw(SimGraphics g) {
-		Font font = new Font("Arial", Font.PLAIN, 18);
+		/*Font font = new Font("Arial", Font.PLAIN, 18);
 
-	    g.setFont(font);
-	    g.setDrawingParameters(50, 20, 1);
+	    g.setFont(font);*/
+	    g.setDrawingParameters(50, 2, 1);
 	    Color rect_color;
 	    if (Math.floor(value) < 3) {
 	    	rect_color = Color.red;

@@ -35,13 +35,7 @@ public class Agent extends User implements Drawable{
 
     @Override
     public void draw(SimGraphics g) {
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("res/buyer.png"));
-        } catch (IOException e) {
-            System.out.println("[ERROR] Invalid image!");
-        }
-        g.drawImage(img);
+        g.drawFastCircle(Color.red);
     }
 
     @Override
