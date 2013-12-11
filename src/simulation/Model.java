@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 import uchicago.src.sim.analysis.OpenSequenceGraph;
 import uchicago.src.sim.engine.BasicAction;
@@ -16,6 +15,7 @@ import uchicago.src.sim.gui.SimGraphics;
 import uchicago.src.sim.network.DefaultNode;
 import uchicago.src.sim.space.Object2DTorus;
 import uchicago.src.sim.engine.SimpleModel;
+import uchicago.src.sim.util.Random;
 
 import data.*;
 import ecommerce.*;
@@ -27,7 +27,6 @@ import java.util.Set;
 public class Model extends SimpleModel {
 
     private ArrayList<Agent> agentList;
-    private ArrayList<Trust> trustList;
     private ArrayList<Product> products;
     private Schedule schedule;
     private DisplaySurface dsurf;
@@ -39,7 +38,8 @@ public class Model extends SimpleModel {
     private int numberOfAgents, spaceSize;
 
     public Model() {
-        spaceSize = 100;
+    	this.numberOfAgents = 15; 
+        this.spaceSize = 100;
         modelManipulator.init();
     }
 
@@ -102,7 +102,6 @@ public class Model extends SimpleModel {
 
     public void buildModel() {
         agentList = new ArrayList<>();
-        trustList = new ArrayList<>();
         space = new Object2DTorus(spaceSize, spaceSize);
         node1 = new DefaultNode();
         node2 = new DefaultNode();
@@ -110,40 +109,37 @@ public class Model extends SimpleModel {
         Parser p = new Parser("data.json");
         products = p.getProducts();
         ArrayList<User> users = p.getUsers();
-        numberOfAgents = users.size();
         // Positions variables
         int baseX = 8;
         int baseY = 25;
         int deltaX = 20;
-        int deltaY = 20;
+        int deltaY = 10;
         int posX = 0;
         int posY = 0;
         int labelX = 2;
         int labelY = 8;
         Random rand = new Random();
         Agent agent;
-        Trust trust;
         int counter = 0;
 
         // Create agents
-        for (User user : users) {
-            // Update positions
-            posX = baseX + (counter % 5) * deltaX;
-            posY = baseY + (counter / 5) * deltaY;
-
-            // Add agent
-            agent = new Agent(posX, posY, Color.red, space, user.getName(), user.getCountry(), user.getBehaviour(), user.getCategories());
-            space.putObjectAt(posX, posY, agent);
-            agentList.add(agent);
-
-            // Set trust label
-            trust = new Trust(posX + labelX, posY + labelY, 0);
-            agent.setTrust(trust);
-            trustList.add(trust);
-
-            counter++;
-
+        for (int i = 0; i<numberOfAgents; i++) {
+        	User user = users.get(i%users.size());
+        	
+			// Update positions
+			posX = baseX + (counter % 5) * deltaX;
+			posY = baseY + (counter / 5) * deltaY;
+			 
+			Color color =  new Color(Random.uniform.nextIntFromTo(2,255), Random.uniform.nextIntFromTo(2,255), Random.uniform.nextIntFromTo(30,255));
+			 
+			// Add agent
+			agent = new Agent(posX, posY, color, space, user.getName()+String.valueOf(i), user.getCountry(), user.getBehaviour(), user.getCategories());
+			space.putObjectAt(posX, posY, agent);
+			agentList.add(agent);
+			
+			counter++;             
         }
+       
     }
 
     private void buildDisplay() {
@@ -158,18 +154,14 @@ public class Model extends SimpleModel {
         Object2DDisplay display = new Object2DDisplay(space);
         display.setObjectList(agentList);
         dsurf.addDisplayableProbeable(display, "Agents Space");
-        
-        // Trusts
-        /*Object2DDisplay display2 = new Object2DDisplay(space);
-        display2.setObjectList(trustList);
-        dsurf.addDisplayableProbeable(display2, "Trust Space");*/
+
         dsurf.display();
 
     }
 
     @Override
     public void buildSchedule() {
-        //schedule.scheduleActionAtInterval(1, new SimulateFeedback());
+        schedule.scheduleActionAtInterval(1, new SimulateFeedback());
         schedule.scheduleActionAtInterval(1, dsurf, "updateDisplay", Schedule.LAST);
     }
 

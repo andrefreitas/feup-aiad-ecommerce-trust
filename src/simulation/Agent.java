@@ -21,7 +21,6 @@ public class Agent extends User implements Drawable{
     private int x, y;
     private Color color;
     private Object2DTorus space;
-    private Trust trust;
     
     public Agent(int x, int y, Color color, Object2DTorus space, String name, String country, String behaviour, ArrayList<String> categories) {
         super(name, country);
@@ -35,7 +34,7 @@ public class Agent extends User implements Drawable{
 
     @Override
     public void draw(SimGraphics g) {
-        g.drawFastCircle(Color.red);
+        g.drawFastCircle(color);
     }
 
     @Override
@@ -52,11 +51,5 @@ public class Agent extends User implements Drawable{
         return color;
     }
     
-    public void setTrust(Trust t){
-        trust = t;
-    }
-    
-    public void setTrustValue(double v){
-        trust.setValue(v);
-    }
+
 }
