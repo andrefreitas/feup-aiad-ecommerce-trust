@@ -104,9 +104,7 @@ public class Model extends SimpleModel {
     @Override
     public void begin() {
         buildModel();
-        System.out.println("antes");
         webServer();
-        System.out.println("Passou o webserver");
         buildDisplay();
         buildSchedule();
     }
@@ -144,7 +142,7 @@ public class Model extends SimpleModel {
 			Color color =  new Color(Random.uniform.nextIntFromTo(2,255), Random.uniform.nextIntFromTo(2,255), Random.uniform.nextIntFromTo(30,255));
 			 
 			// Add agent
-			agent = new Agent(posX, posY, color, space, user.getName()+String.valueOf(i), user.getCountry(), user.getBehaviour(), user.getCategories());
+			agent = new Agent(posX, posY, color, space, user.getName(), user.getCountry(), user.getBehaviour(), user.getCategories());
 			space.putObjectAt(posX, posY, agent);
 			agentList.add(agent);
 			
@@ -198,6 +196,16 @@ public class Model extends SimpleModel {
         return randomProduct;
 
     }
+    
+    private Agent getAgentByName(String name){
+         for(Agent agent: agentList){
+             System.out.println(agent.getName() + " == " + name);
+                if(agent.getName().equals(name))
+                    return agent;
+                
+            }
+         return null;
+    }
 
     int generateScore(Agent buyer, Agent seller) {
         String behaviour = seller.getBehaviour();
@@ -218,6 +226,7 @@ public class Model extends SimpleModel {
         score = min + (int) (Math.random() * ((max - min) + 1));
         return score;
     }
+    
 
     class SimulateFeedback extends BasicAction {
 
@@ -282,26 +291,34 @@ public class Model extends SimpleModel {
          }
       });
       
-       get(new Route("/getAgentFeedbacks") {
+       get(new Route("/getAgentFeedbacks/:name") {
          @Override
          public Object handle(Request request, Response response) {
-            response.header("Content-type", "text/json");
+            //response.header("Content-type", "text/json");
+            String agentName = request.params(":name");
+            Agent agent = getAgentByName(agentName);
             
-            Gson gson = new Gson();
-            JsonArray agentListJson = new JsonArray();
-            
-            for(Agent agent: agentList){
-                String name = agent.getName();
-                String country = agent.getCountry();
-                String behaviour = agent.getBehaviour();
-                JsonObject agentJson = new JsonObject();
-                agentJson.addProperty("name", name);
-                agentJson.addProperty("country", country);
-                agentJson.addProperty("behaviour", behaviour);
-                agentListJson.add(agentJson);
-  
+            if(agent == null) {
+                return "{'result':'notfound'}";
             }
-            return gson.toJson(agentListJson);
+            Gson gson = new Gson();
+            JsonArray feedbackListJson = new JsonArray();
+            for(Feedback feedback: agent.getFeedbacks()){
+                JsonObject feedbackJson = new JsonObject();
+                String category = feedback.getProduct().getCategory();
+                String product = feedback.getProduct().getName();
+                int score = feedback.getScore();
+                int ticks = feedback.getTimeTick();
+                String buyer = feedback.getBuyer().getName();
+                feedbackJson.addProperty("category", category);
+                feedbackJson.addProperty("product", product);
+                feedbackJson.addProperty("score", score);
+                feedbackJson.addProperty("ticks", ticks);
+                feedbackListJson.add(feedbackJson);
+            }
+            
+            return gson.toJson(feedbackListJson);
+                    
          }
       });
     }
