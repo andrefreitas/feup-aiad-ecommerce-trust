@@ -1,55 +1,55 @@
 {
   "users": [
     {
-      "name": "Petter Griffin",
+      "name": "petter",
       "country": "usa",
       "behaviour" : "bad",
       "categories" : ["computers", "tablets"]
     },
     {
-      "name": "xpto",
+      "name": "carl",
       "country": "usa",
       "behaviour" : "normal",
       "categories" : ["phones"]
     },
     {
-      "name": "Lois Griffin",
+      "name": "lois",
       "country": "usa",
       "behaviour" : "good",
       "categories" : ["keyboards"]
     },
     {
-      "name": "Meg Griffin",
+      "name": "meg",
       "country": "usa",
       "behaviour" : "good",
       "categories" : ["tablets"]
     },
     {
-      "name": "Brian Griffin",
+      "name": "brian",
       "country": "usa",
       "behaviour" : "normal",
       "categories" : ["phones"]
     },
     {
-      "name": "Stewie Griffin",
+      "name": "stewie",
       "country": "usa",
       "behaviour" : "bad",
       "categories" : ["computers"]
     },
     {
-      "name": "Cleveland Brown",
+      "name": "cleveland",
       "country": "usa",
       "behaviour" : "normal",
       "categories" : ["phones"]
     },
     {
-      "name": "Glenn Quagmire",
+      "name": "glenn",
       "country": "usa",
       "behaviour" : "bad",
       "categories" : ["computers","keyboards"]
     },
     {
-      "name": "Joe Swanson",
+      "name": "joe",
       "country": "usa",
       "behaviour" : "good",
       "categories" : ["phones", "tablets"]

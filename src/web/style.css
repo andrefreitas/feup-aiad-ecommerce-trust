@@ -20,7 +20,7 @@ header {
 
 .agents {
     margin: 0 auto;
-    width: 700px;
+    width: 800px;
     border: solid 1px #DDDDDD;
     margin-top: 50px;
     min-height: 300px;
@@ -40,6 +40,12 @@ header {
 }
 
 .agents > .head > .behaviour {
+    width: 100px;
+    border-right: solid 1px #DDDDDD;
+
+}
+
+.agents > .head > .feedbacks {
     width: 100px;
     border-right: solid 1px #DDDDDD;
 
@@ -73,6 +79,12 @@ header {
 }
 
 .agents > .agent > .behaviour {
+    width: 100px;
+    border-right: solid 1px #DDDDDD;
+    text-align: center;
+}
+
+.agents > .agent > .feedbacks {
     width: 100px;
     border-right: solid 1px #DDDDDD;
     text-align: center;

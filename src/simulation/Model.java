@@ -300,6 +300,7 @@ public class Model extends SimpleModel {
                 String name = agent.getName();
                 String country = agent.getCountry();
                 String behaviour = agent.getBehaviour();
+                int feedbacks = agent.getFeedbacks().size();
                 JsonArray categoriesJson = new JsonArray(); 
                 for(String category: agent.getCategories()){
                     categoriesJson.add(new JsonPrimitive(category));
@@ -309,6 +310,7 @@ public class Model extends SimpleModel {
                 agentJson.addProperty("country", country);
                 agentJson.addProperty("behaviour", behaviour);
                 agentJson.add("categories", categoriesJson);
+                agentJson.addProperty("feedbacks", feedbacks);
                 agentListJson.add(agentJson);
   
             }
@@ -342,6 +344,7 @@ public class Model extends SimpleModel {
                 feedbackJson.addProperty("product", product);
                 feedbackJson.addProperty("score", score);
                 feedbackJson.addProperty("ticks", ticks);
+                feedbackJson.addProperty("buyer", buyer);
                 feedbackListJson.add(feedbackJson);
             }
             
