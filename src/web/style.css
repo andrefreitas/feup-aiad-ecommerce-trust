@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Verdana;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 20px;
+}
+
+header {
+    background: #f5f5f5;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    color: #9c9c9c;
+    border-bottom: solid 8px #DDDDDD;
+}
+
+.agents {
+    margin: 0 auto;
+    width: 700px;
+    border: solid 1px #DDDDDD;
+    margin-top: 50px;
+    min-height: 300px;
+    color: #9c9c9c;
+    overflow: auto;
+}
+
+.agents > .head > div {
+    float: left;
+    padding: 10px;
+    text-align: center;
+}
+
+.agents > .head > .name {
+    width: 200px;
+    border-right: solid 1px #DDDDDD;
+}
+
+.agents > .head > .behaviour {
+    width: 100px;
+    border-right: solid 1px #DDDDDD;
+
+}
+
+.agents > .head > .categories{
+    width: 338px;
+
+}
+
+.agents > .head {
+    background: #f5f5f5;
+    overflow: auto;
+    border-bottom: solid 4px #DDDDDD;
+}
+.agent {
+    overflow: auto;
+    cursor: pointer;
+}
+.agent:hover {
+    background: #f8f8f8;
+}
+
+.agents > .agent > div {
+    float: left;
+    padding: 10px;
+}
+.agents > .agent > .name{
+    width: 200px;
+    border-right: solid 1px #DDDDDD;
+}
+
+.agents > .agent > .behaviour {
+    width: 100px;
+    border-right: solid 1px #DDDDDD;
+    text-align: center;
+}
+
+.agents > .agent > .categories {
+    width: 338px;
+}

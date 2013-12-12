@@ -3,6 +3,7 @@ package simulation;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -142,9 +143,7 @@ public class Model extends SimpleModel {
         int counter = 0;
 
         // Create agents
-        for (int i = 0; i<numberOfAgents; i++) {
-        	User user = users.get(i%users.size());
-        	
+        for (User user: users) {
 			// Update positions
 			posX = baseX + (counter % 5) * deltaX;
 			posY = baseY + (counter / 5) * deltaY;
@@ -301,10 +300,15 @@ public class Model extends SimpleModel {
                 String name = agent.getName();
                 String country = agent.getCountry();
                 String behaviour = agent.getBehaviour();
+                JsonArray categoriesJson = new JsonArray(); 
+                for(String category: agent.getCategories()){
+                    categoriesJson.add(new JsonPrimitive(category));
+                }
                 JsonObject agentJson = new JsonObject();
                 agentJson.addProperty("name", name);
                 agentJson.addProperty("country", country);
                 agentJson.addProperty("behaviour", behaviour);
+                agentJson.add("categories", categoriesJson);
                 agentListJson.add(agentJson);
   
             }
