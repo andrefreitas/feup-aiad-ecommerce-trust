@@ -199,7 +199,6 @@ public class Model extends SimpleModel {
     
     private Agent getAgentByName(String name){
          for(Agent agent: agentList){
-             System.out.println(agent.getName() + " == " + name);
                 if(agent.getName().equals(name))
                     return agent;
                 
@@ -294,14 +293,17 @@ public class Model extends SimpleModel {
        get(new Route("/getAgentFeedbacks/:name") {
          @Override
          public Object handle(Request request, Response response) {
-            //response.header("Content-type", "text/json");
+            response.header("Content-type", "text/json");
             String agentName = request.params(":name");
             Agent agent = getAgentByName(agentName);
-            
-            if(agent == null) {
-                return "{'result':'notfound'}";
-            }
             Gson gson = new Gson();
+            
+            JsonObject errorJson = new JsonObject();
+            errorJson.addProperty("result", "agent not found");
+            if(agent == null) {
+                return gson.toJson(errorJson);
+            }
+            
             JsonArray feedbackListJson = new JsonArray();
             for(Feedback feedback: agent.getFeedbacks()){
                 JsonObject feedbackJson = new JsonObject();
@@ -319,6 +321,24 @@ public class Model extends SimpleModel {
             
             return gson.toJson(feedbackListJson);
                     
+         }
+      });
+       
+       
+      get(new Route("/getAgentTrust/:name/:category/:product") {
+         @Override
+         public Object handle(Request request, Response response) {
+            response.header("Content-type", "text/json");
+            String agentName = request.params(":name");
+            String category = request.params(":category");
+            String product = request.params(":product");
+            Agent agent = getAgentByName(agentName);
+            int ticks = (int) getTickCount();
+            double trust = agent.computeLinearTrust(agent, product, category, ticks);
+            Gson gson = new Gson();
+            JsonObject trustJson = new JsonObject();
+            trustJson.addProperty("trust", trust);
+            return gson.toJson(trustJson);
          }
       });
     }

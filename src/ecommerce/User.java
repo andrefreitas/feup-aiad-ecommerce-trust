@@ -90,18 +90,6 @@ public class User {
         global_trust = (global_trust + rating)/2.0;
     }
 
-    public double computeTrust(User seller, String productCategory, String productName) {
-
-        try {
-            String key = productCategory + "-" + productName;
-            double value = trust.get(key);
-            return value;
-        } catch (Exception e) {
-            return 0;
-        }
-
-    }
-
     public ArrayList<Feedback> getFeedbacks() {
         return this.feedbacks;
     }
