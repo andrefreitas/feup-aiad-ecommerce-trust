@@ -398,6 +398,21 @@ public class Model extends SimpleModel {
          }
       });
       
+      get(new Route("/bootstrap.css") {
+         @Override
+         public Object handle(Request request, Response response) {
+             response.header("Content-type", "text/css");
+             String index="";
+             try {
+                 index = readFile("src/web/bootstrap.css");
+             } catch (IOException ex) {
+                 Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             return index;
+
+         }
+      });
+      
        get(new Route("/scripts.js") {
          @Override
          public Object handle(Request request, Response response) {
@@ -405,6 +420,21 @@ public class Model extends SimpleModel {
              String index="";
              try {
                  index = readFile("src/web/scripts.js");
+             } catch (IOException ex) {
+                 Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             return index;
+
+         }
+      });
+       
+      get(new Route("/bootstrap.js") {
+         @Override
+         public Object handle(Request request, Response response) {
+             response.header("Content-type", "text/javascript");
+             String index="";
+             try {
+                 index = readFile("src/web/bootstrap.js");
              } catch (IOException ex) {
                  Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
              }

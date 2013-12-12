@@ -1,5 +1,8 @@
 $(document).ready(function(){
     loadAgents();
+    $('.agent').click(function(){
+        agentClick(this);
+    });
 });
 
 function loadAgents(){
@@ -23,4 +26,10 @@ function addAgent(agent){
              + "<div class='categories'>" + agent.categories + "</div>"
              + "</div>";
     $('.agents').append(html);
+}
+
+function agentClick(elem){
+    $('#agentModal').modal('show');
+    var name = $(elem).attr("id");
+    $('#agentModalTitle').html(name);
 }
