@@ -1,5 +1,8 @@
 package simulation;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +20,9 @@ import uchicago.src.sim.space.Object2DTorus;
 import uchicago.src.sim.engine.SimpleModel;
 import uchicago.src.sim.util.Random;
 
+import static spark.Spark.*;
+import spark.*;
+
 import data.*;
 import ecommerce.*;
 import java.util.HashMap;
@@ -25,6 +31,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Model extends SimpleModel {
+    
+    public static Model thisModel;
 
     private ArrayList<Agent> agentList;
     private ArrayList<Product> products;
@@ -96,6 +104,9 @@ public class Model extends SimpleModel {
     @Override
     public void begin() {
         buildModel();
+        System.out.println("antes");
+        webServer();
+        System.out.println("Passou o webserver");
         buildDisplay();
         buildSchedule();
     }
@@ -242,9 +253,57 @@ public class Model extends SimpleModel {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
         SimInit init = new SimInit();
-        init.loadModel(new Model(), null, false);
+        thisModel = new Model();
+        init.loadModel(thisModel, null, false);
+    }
+    
+    public void webServer(){
+      get(new Route("/getAgents") {
+         @Override
+         public Object handle(Request request, Response response) {
+            response.header("Content-type", "text/json");
+            Gson gson = new Gson();
+            JsonArray agentListJson = new JsonArray();
+            
+            for(Agent agent: agentList){
+                String name = agent.getName();
+                String country = agent.getCountry();
+                String behaviour = agent.getBehaviour();
+                JsonObject agentJson = new JsonObject();
+                agentJson.addProperty("name", name);
+                agentJson.addProperty("country", country);
+                agentJson.addProperty("behaviour", behaviour);
+                agentListJson.add(agentJson);
+  
+            }
+            return gson.toJson(agentListJson);
+         }
+      });
+      
+       get(new Route("/getAgentFeedbacks") {
+         @Override
+         public Object handle(Request request, Response response) {
+            response.header("Content-type", "text/json");
+            
+            Gson gson = new Gson();
+            JsonArray agentListJson = new JsonArray();
+            
+            for(Agent agent: agentList){
+                String name = agent.getName();
+                String country = agent.getCountry();
+                String behaviour = agent.getBehaviour();
+                JsonObject agentJson = new JsonObject();
+                agentJson.addProperty("name", name);
+                agentJson.addProperty("country", country);
+                agentJson.addProperty("behaviour", behaviour);
+                agentListJson.add(agentJson);
+  
+            }
+            return gson.toJson(agentListJson);
+         }
+      });
     }
 
 }
