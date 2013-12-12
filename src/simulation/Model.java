@@ -22,13 +22,23 @@ import uchicago.src.sim.util.Random;
 
 import static spark.Spark.*;
 import spark.*;
+import org.stringtemplate.v4.*;
 
 import data.*;
 import ecommerce.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Model extends SimpleModel {
     
@@ -267,7 +277,19 @@ public class Model extends SimpleModel {
         init.loadModel(thisModel, null, false);
     }
     
+    public static String readFile(String path, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return encoding.decode(ByteBuffer.wrap(encoded)).toString();
+    }
+    
+    public static String readFile(String path) throws IOException {
+        Charset encoding = StandardCharsets.UTF_8;
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return encoding.decode(ByteBuffer.wrap(encoded)).toString();
+    }
+    
     public void webServer(){
+      setPort(8080);
       get(new Route("/getAgents") {
          @Override
          public Object handle(Request request, Response response) {
@@ -339,8 +361,55 @@ public class Model extends SimpleModel {
             JsonObject trustJson = new JsonObject();
             trustJson.addProperty("trust", trust);
             return gson.toJson(trustJson);
+
          }
       });
+
+      get(new Route("/") {
+         @Override
+         public Object handle(Request request, Response response) {
+             String index="";
+             try {
+                 index = readFile("src/web/index.html");
+             } catch (IOException ex) {
+                 Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             return index;
+
+         }
+      });
+      
+      get(new Route("/style.css") {
+         @Override
+         public Object handle(Request request, Response response) {
+             response.header("Content-type", "text/css");
+             String index="";
+             try {
+                 index = readFile("src/web/style.css");
+             } catch (IOException ex) {
+                 Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             return index;
+
+         }
+      });
+      
+       get(new Route("/scripts.js") {
+         @Override
+         public Object handle(Request request, Response response) {
+             response.header("Content-type", "text/javascript");
+             String index="";
+             try {
+                 index = readFile("src/web/scripts.js");
+             } catch (IOException ex) {
+                 Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             return index;
+
+         }
+      });
+      
+             
     }
 
 }
