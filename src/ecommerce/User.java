@@ -92,8 +92,6 @@ public class User {
         for (Feedback feedback : feedbacks) {
             sameCategory = (feedback.getProduct().getCategory().equals(productCategory)) ? 1 : 0;
             sameProduct = (feedback.getProduct().getName().equals(productName)) ? 1 : 0;
-            System.out.println("cat : " + sameCategory);
-            System.out.println("prod : " + sameProduct);
             diff = timeTick - feedback.getTimeTick();
             timeImportance = 1.0 / (0.01 * diff + 1);
             //para diff = 0 --> timeIm = 1  , diff = 100 --> timeIm = 0.5  ; tende para 0
@@ -128,7 +126,6 @@ public class User {
         }
 
         double average = sum / feedbacksNumber;
-        System.out.println("res : " + average);
         return average;
     }
     
