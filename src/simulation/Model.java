@@ -314,6 +314,34 @@ public class Model extends SimpleModel {
          }
       });
       
+       get(new Route("/newFeedback/:target/:category/:product/:score/:tick/:owner") {
+
+          @Override
+          public Object handle(Request request, Response response) {
+               response.header("Content-type", "text/json");
+                String target = request.params(":target");
+                String category = request.params(":category");
+                String product = request.params(":product");
+                Integer score = Integer.parseInt(request.params(":score"));
+                Integer tick = Integer.parseInt(request.params(":tick"));
+                String owner = request.params(":owner");
+                Agent targetAgent = getAgentByName(target);
+                Agent ownerAgent = getAgentByName(owner);
+                Gson gson = new Gson();
+                JsonObject errorJson = new JsonObject();
+                errorJson.addProperty("result", "agent not found");
+                if(targetAgent == null || ownerAgent == null) {
+                    return gson.toJson(errorJson);
+                }
+                targetAgent.addFeedback(product, category, score.intValue(), tick.intValue(), ownerAgent);
+                JsonObject returnJson = new JsonObject();
+                returnJson.addProperty("result", "Feedback added");                
+                return gson.toJson(returnJson);                
+          }
+       
+       });    
+      
+      
        get(new Route("/getAgentFeedbacks/:name") {
          @Override
          public Object handle(Request request, Response response) {

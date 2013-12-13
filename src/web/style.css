@@ -128,12 +128,11 @@ header {
     margin-right: 20px;
 }
 
-#addFeedbackBt, submitFeedbackbt {
+#addFeedbackBt, postFeedbackbt {
   margin: 10px;
 }
-#categoryInput,
-#productInput,#scoreInput,
-#feedbkOwnerInput {
+#categoryInput,#tickInput, #productInput, 
+#scoreInput, #feedbkOwnerInput {
     margin-bottom: 10px;
 }
 
