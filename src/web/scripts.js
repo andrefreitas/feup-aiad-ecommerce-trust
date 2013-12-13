@@ -3,6 +3,10 @@ $(document).ready(function(){
     $('.agent').click(function(){
         agentClick(this);
     });
+    
+    $('#computeTrustBt').click(function(){
+        computeTrustClick();
+    });
 });
 
 function loadAgents(){
@@ -30,14 +34,20 @@ function addAgent(agent){
 }
 
 function agentClick(elem){
+    $('#trustComputed').html("");
     $('#agentModal').modal('show');
     var name = $(elem).attr("id");
     $('#agentModalTitle').html(name);
     $('tbody').html("");
+    $('#agentTrust').html("0");
+    var trust = getAgentTrust(name, "<none>", "<none>");
+    trust = trust.toString().substr(0,4);
+    $('#agentTrust').html(trust);
     var feedbacks = getAgentFeedbacks(name);
     for (index = 0; index < feedbacks.length; ++index) {
         addFeedback(feedbacks[index]);
     }
+    
 }
 
 function getAgentFeedbacks(agent){
@@ -55,4 +65,23 @@ function addFeedback(feedback){
              + "<td>" + feedback.buyer + "</td>"
              + "</tr>";
     $('tbody').append(html);
+}
+
+function getAgentTrust(agentName, category, product){
+    $.ajaxSetup( { "async": false } );
+    var data = $.getJSON("getAgentTrust/" +  agentName + "/" + category + "/" + product);
+    $.ajaxSetup( { "async": true } );
+    return $.parseJSON(data["responseText"])["trust"];
+}
+
+function computeTrustClick(){
+    $('#trustComputed').html("");
+    var agentName = $('#agentModalTitle').html();
+    var category = $('#categoryInput').val();
+    var product = $('#productInput').val();
+    if(category != "" && product != "") {
+        var trust = getAgentTrust(agentName, category, product);
+        trust = trust.toString().substr(0,4);
+        $('#trustComputed').html("Result: " + trust + "/5");
+    }
 }
