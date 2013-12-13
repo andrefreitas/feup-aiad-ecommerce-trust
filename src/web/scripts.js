@@ -7,6 +7,10 @@ $(document).ready(function(){
     $('#computeTrustBt').click(function(){
         computeTrustClick();
     });
+    
+      $('#addFeedbackBt').click(function(){
+        addNewFeedbackClick();
+    });
 });
 
 function loadAgents(){
@@ -83,5 +87,14 @@ function computeTrustClick(){
         var trust = getAgentTrust(agentName, category, product);
         trust = trust.toString().substr(0,4);
         $('#trustComputed').html("Result: " + trust + "/5");
+    }
+}
+
+function addNewFeedbackClick(){
+    $('#newFeedbackAdded').html("");
+    if($(".addFeedback").is(':visible')){
+        $('.addFeedback').fadeOut();
+    }else{
+        $('.addFeedback').fadeIn();
     }
 }

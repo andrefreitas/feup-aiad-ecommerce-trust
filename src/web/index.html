@@ -14,7 +14,7 @@
         <header>
             <h1>Ecommerce Trust</h1>
         </header>
-        
+
         <div class="agents">
             <div class="head">
                 <div class="name">Name</div>
@@ -23,50 +23,62 @@
                 <div class="categories">Categories</div>
             </div>
         </div>
-        
+
         <!-- Modal -->
         <div class="modal fade" id="agentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="agentModalTitle"></h4>
-              </div>
-              <div class="modal-body">
-                <div class="feedbacks">
-                    <h4>Feedbacks</h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Time</th>
-                            <th>Score</th>
-                            <th>Category</th>
-                            <th>Product</th>
-                            <th>Buyer</th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                  
-                <div class="trust">
-                    <h4>Trust</h4>
-                    The following trust is a global value. You can compute a personalized trust based on the product and category you want to buy from this user.
-                    <div class="value">
-                        <span id="agentTrust"></span>/5
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="agentModalTitle"></h4>
                     </div>
-                    <div class="computeTrust">
-                        <input type="text" class="form-control" placeholder="write the category..." id="categoryInput">
-                        <input type="text" class="form-control" placeholder="write the product..." id="productInput">
-                        <span id="trustComputed"></span> <button type="button" class="btn btn-primary" id="computeTrustBt">Compute Trust</button>
+                    <div class="modal-body">
+                        <div class="feedbacks">
+                            <h4>Feedbacks</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                <th>Time</th>
+                                <th>Score</th>
+                                <th>Category</th>
+                                <th>Product</th>
+                                <th>Buyer</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="trust">
+                            <h4>Trust</h4>
+                            The following trust is a global value. You can compute a personalized trust based on the product and category you want to buy from this user.
+                            <div class="value">
+                                <span id="agentTrust"></span>/5
+                            </div>
+                            <div class="computeTrust">
+                                <input type="text" class="form-control" placeholder="write the category..." id="categoryInput">
+                                <input type="text" class="form-control" placeholder="write the product..." id="productInput">
+                                <span id="trustComputed"></span> <button type="button" class="btn btn-primary" id="computeTrustBt">Compute Trust</button>
+                            </div>
+                            <br>
+                            <div>
+                                <span id="newFeedbackAdded"></span> <button type="button" class="btn btn-primary" id="addFeedbackBt">Add Feedback</button>
+                                <div class="addFeedback">
+                                    <form id="newpost" method="get" action="/addfeedback" onsubmit="" enctype="multipart/form-data">
+                                        <input type="text" class="form-control" placeholder="write the category..." id="categoryInput">
+                                        <input type="text" class="form-control" placeholder="write the product..." id="productInput">
+                                        <input type="number" class="form-control" placeholder="write the score..." id="scoreInput">
+                                        <input type="text" class="form-control" placeholder="write the feedback owner..." id="feedbkOwnerInput">
+                                        <input type="submit" value="add" class="btn btn-primary" id="submitFeedbackbt">
+                                    </form>
+                                </div>
+                            </div>                   
+                        </div>
                     </div>
-                   
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
     </body>
