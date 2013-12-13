@@ -59,44 +59,44 @@
     {
       "name": "computers",
       "products": [
-        "Asus ZenBook",
-        "Apple Macbook Air 13",
-        "Apple iMac 27",
-        "Apple Macbook Pro 15",
-        "Lenovo ThinkPad"
+        "asuszenBook",
+        "macbookair13",
+        "imac27",
+        "macbookpro15",
+        "lenovopad"
       ]
     },
     {
       "name": "phones",
       "products": [
-        "Samsung Galaxy S4",
-        "iPhone 5s",
-        "Nokia Lumia 920",
-        "Google Nexus 4",
-        "Sony Xperia Z",
-        "Sony Xperia S"
+        "galaxys4",
+        "iphone5s",
+        "lumia920",
+        "googlenexus4",
+        "sonyxperiaz",
+        "sonyxperias"
       ]
     },
     {
       "name": "tablets",
       "products": [
-        "iPad Air",
-        "iPad Mini Retina",
-        "iPad Mini",
-        "Google Nexus 7",
-        "Windows Surface RT",
-        "Windows Surface"
+        "ipadair",
+        "ipadminiretina",
+        "ipadmini",
+        "googlenexus7",
+        "windowssurfacert",
+        "windowssurface"
       ]
     },
     {
       "name": "keyboards",
       "products": [
-        "Logitech Classic Keyboard",
-        "Apple Keyboard Wireless",
-        "IBM Model M",
-        "NGS Keyboard",
-        "Trust Keyboard S",
-        "Sony Experience Pad"
+        "logitechclassic",
+        "applekeyboard",
+        "ibmmodelm",
+        "ngskeyboard",
+        "trustkeyboard",
+        "sonypad"
       ]
     }
   ]
