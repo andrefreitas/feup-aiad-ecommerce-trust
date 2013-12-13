@@ -74,20 +74,6 @@ public class User {
         Product product = new Product(productName, productCategory);
         Feedback feedback = new Feedback(product, rating, ticks, buyer);
         feedbacks.add(feedback);
-
-        // Non Linear Trust
-        int numFeedbacks = feedbacks.size();
-        String key = productCategory + "-" + productName;
-        try {
-            Double trust = this.trust.get(key);
-            trust = (trust + rating * NEW_FEEDBACK_VALUE) / (numFeedbacks + 1);
-            this.trust.put(key, trust);
-        } catch (Exception e) {
-            this.trust.put(key, (double) rating);
-        }
-        
-        // Sets up a new global_trust
-        global_trust = (global_trust + rating)/2.0;
     }
 
     public ArrayList<Feedback> getFeedbacks() {
@@ -97,15 +83,17 @@ public class User {
     public double computeLinearTrust(User seller, String productName, String productCategory, int timeTick) {
         ArrayList<Feedback> feedbacks = seller.getFeedbacks();
         double sum = 0;
-        double feedbacksNumber = feedbacks.size();
+        double feedbacksNumber = 0;
         int diff;
         int sameCategory;
         int sameProduct;
         double timeImportance;
 
         for (Feedback feedback : feedbacks) {
-            sameCategory = (feedback.getProduct().getCategory() == productCategory) ? 1 : 0;
-            sameProduct = (feedback.getProduct().getName() == productName) ? 1 : 0;
+            sameCategory = (feedback.getProduct().getCategory().equals(productCategory)) ? 1 : 0;
+            sameProduct = (feedback.getProduct().getName().equals(productName)) ? 1 : 0;
+            System.out.println("cat : " + sameCategory);
+            System.out.println("prod : " + sameProduct);
             diff = timeTick - feedback.getTimeTick();
             timeImportance = 1.0 / (0.01 * diff + 1);
             //para diff = 0 --> timeIm = 1  , diff = 100 --> timeIm = 0.5  ; tende para 0
@@ -140,6 +128,7 @@ public class User {
         }
 
         double average = sum / feedbacksNumber;
+        System.out.println("res : " + average);
         return average;
     }
     
