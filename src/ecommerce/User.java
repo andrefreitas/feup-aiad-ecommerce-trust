@@ -88,10 +88,12 @@ public class User {
         int sameCategory;
         int sameProduct;
         double timeImportance;
+        
+        if(feedbacks.size() == 0 ) return 0;
 
         for (Feedback feedback : feedbacks) {
             sameCategory = (feedback.getProduct().getCategory().equals(productCategory)) ? 1 : 0;
-            sameProduct = (feedback.getProduct().getName().equals(productName)) ? 1 : 0;
+            sameProduct = (feedback.getProduct().getCategory().equals(productCategory) && feedback.getProduct().getName().equals(productName)) ? 1 : 0;
             diff = timeTick - feedback.getTimeTick();
             timeImportance = 1.0 / (0.01 * diff + 1);
             //para diff = 0 --> timeIm = 1  , diff = 100 --> timeIm = 0.5  ; tende para 0
@@ -127,6 +129,16 @@ public class User {
 
         double average = sum / feedbacksNumber;
         return average;
+    }
+    
+    public double computeGlobalTrust(){
+        if(feedbacks.size() == 0) return 0;
+        double avg = feedbacks.get(0).getScore();
+        for(int i = 1; i < feedbacks.size(); i++) {
+            avg = (avg + 2 * feedbacks.get(i).getScore()) / 3.0;
+        }
+        
+        return avg;
     }
     
     @Override

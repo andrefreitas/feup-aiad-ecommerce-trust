@@ -297,12 +297,15 @@ public class Model extends SimpleModel {
                 String country = agent.getCountry();
                 String behaviour = agent.getBehaviour();
                 int feedbacks = agent.getFeedbacks().size();
+                int ticksNow = (int) getTickCount();
+                double globalTrust = agent.computeGlobalTrust();
                 JsonArray categoriesJson = new JsonArray(); 
                 for(String category: agent.getCategories()){
                     categoriesJson.add(new JsonPrimitive(category));
                 }
                 JsonObject agentJson = new JsonObject();
                 agentJson.addProperty("name", name);
+                agentJson.addProperty("trust", globalTrust);
                 agentJson.addProperty("country", country);
                 agentJson.addProperty("behaviour", behaviour);
                 agentJson.add("categories", categoriesJson);
@@ -363,15 +366,12 @@ public class Model extends SimpleModel {
                 String product = feedback.getProduct().getName();
                 int score = feedback.getScore();
                 int ticks = feedback.getTimeTick();
-                int ticksNow = (int) getTickCount();
-                double globalTrust = agent.computeLinearTrust(agent, "<none>", "<none>", ticksNow);
                 String buyer = feedback.getBuyer().getName();
                 feedbackJson.addProperty("category", category);
                 feedbackJson.addProperty("product", product);
                 feedbackJson.addProperty("score", score);
                 feedbackJson.addProperty("ticks", ticks);
                 feedbackJson.addProperty("buyer", buyer);
-                feedbackJson.addProperty("trust", globalTrust);
                 feedbackListJson.add(feedbackJson);
             }
             
@@ -391,6 +391,21 @@ public class Model extends SimpleModel {
             Agent agent = getAgentByName(agentName);
             int ticks = (int) getTickCount();
             double trust = agent.computeLinearTrust(agent, product, category, ticks);
+            Gson gson = new Gson();
+            JsonObject trustJson = new JsonObject();
+            trustJson.addProperty("trust", trust);
+            return gson.toJson(trustJson);
+
+         }
+      });
+      
+      get(new Route("/getAgentGlobalTrust/:name") {
+         @Override
+         public Object handle(Request request, Response response) {
+            response.header("Content-type", "text/json");
+            String agentName = request.params(":name");
+            Agent agent = getAgentByName(agentName);
+            double trust = agent.computeGlobalTrust();
             Gson gson = new Gson();
             JsonObject trustJson = new JsonObject();
             trustJson.addProperty("trust", trust);

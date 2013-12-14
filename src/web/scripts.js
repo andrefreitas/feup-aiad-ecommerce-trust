@@ -31,8 +31,10 @@ function getAgents() {
 }
 
 function addAgent(agent) {
+    var trust = agent.trust.toString().substr(0, 4);
     var html = "<div class='agent' id='" + agent.name + "'>"
             + "<div class='name'>" + agent.name + "</div>"
+            + "<div class='trust'>" + trust + "</div>"
             + "<div class='feedbacks'>" + agent.feedbacks + "</div>"
             + "<div class='behaviour'>" + agent.behaviour + "</div>"
             + "<div class='categories'>" + agent.categories + "</div>"
@@ -47,7 +49,7 @@ function agentClick(elem) {
     $('#agentModalTitle').html(name);
     $('tbody').html("");
     $('#agentTrust').html("0");
-    var trust = getAgentTrust(name, "<none>", "<none>");
+    var trust = getAgentGlobalTrust(name);
     trust = trust.toString().substr(0, 4);
     $('#agentTrust').html(trust);
     var feedbacks = getAgentFeedbacks(name);
@@ -81,6 +83,14 @@ function getAgentTrust(agentName, category, product) {
     return $.parseJSON(data["responseText"])["trust"];
 }
 
+function getAgentGlobalTrust(agentName) {
+    $.ajaxSetup({"async": false});
+    var data = $.getJSON("getAgentGlobalTrust/" + agentName);
+    $.ajaxSetup({"async": true});
+    return $.parseJSON(data["responseText"])["trust"];
+}
+
+
 function computeTrustClick() {
     $('#trustComputed').html("");
     var agentName = $('#agentModalTitle').html();
@@ -113,7 +123,7 @@ function addNewFeedbackClick() {
     if (category !== "" && product !== "" && score !== "" 
             && tick !== "" && owner !== "") {
         var requestResult = addNewFeedBack(targetagentName,category,product,score,tick,owner);
-        $('#newFeedbackAdded').html(requestResult);      
+        location.reload();   
     }
 }
 
