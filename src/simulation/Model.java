@@ -297,12 +297,15 @@ public class Model extends SimpleModel {
                 String country = agent.getCountry();
                 String behaviour = agent.getBehaviour();
                 int feedbacks = agent.getFeedbacks().size();
+                int ticksNow = (int) getTickCount();
+                double globalTrust = agent.computeLinearTrust(agent, "<none>", "<none>", ticksNow);
                 JsonArray categoriesJson = new JsonArray(); 
                 for(String category: agent.getCategories()){
                     categoriesJson.add(new JsonPrimitive(category));
                 }
                 JsonObject agentJson = new JsonObject();
                 agentJson.addProperty("name", name);
+                agentJson.addProperty("trust", globalTrust);
                 agentJson.addProperty("country", country);
                 agentJson.addProperty("behaviour", behaviour);
                 agentJson.add("categories", categoriesJson);

@@ -88,6 +88,8 @@ public class User {
         int sameCategory;
         int sameProduct;
         double timeImportance;
+        
+        if(feedbacks.size() == 0 ) return 0;
 
         for (Feedback feedback : feedbacks) {
             sameCategory = (feedback.getProduct().getCategory().equals(productCategory)) ? 1 : 0;

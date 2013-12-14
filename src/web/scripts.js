@@ -31,8 +31,10 @@ function getAgents() {
 }
 
 function addAgent(agent) {
+    var trust = agent.trust.toString().substr(0, 4);
     var html = "<div class='agent' id='" + agent.name + "'>"
             + "<div class='name'>" + agent.name + "</div>"
+            + "<div class='trust'>" + trust + "</div>"
             + "<div class='feedbacks'>" + agent.feedbacks + "</div>"
             + "<div class='behaviour'>" + agent.behaviour + "</div>"
             + "<div class='categories'>" + agent.categories + "</div>"
@@ -113,7 +115,7 @@ function addNewFeedbackClick() {
     if (category !== "" && product !== "" && score !== "" 
             && tick !== "" && owner !== "") {
         var requestResult = addNewFeedBack(targetagentName,category,product,score,tick,owner);
-        $('#newFeedbackAdded').html(requestResult);      
+        location.reload();   
     }
 }
 

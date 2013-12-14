@@ -20,7 +20,7 @@ header {
 
 .agents {
     margin: 0 auto;
-    width: 800px;
+    width: 900px;
     border: solid 1px #DDDDDD;
     margin-top: 50px;
     min-height: 300px;
@@ -40,6 +40,13 @@ header {
 }
 
 .agents > .head > .behaviour {
+    width: 100px;
+    border-right: solid 1px #DDDDDD;
+
+}
+
+
+.agents > .head > .trust {
     width: 100px;
     border-right: solid 1px #DDDDDD;
 
@@ -76,6 +83,12 @@ header {
 .agents > .agent > .name{
     width: 200px;
     border-right: solid 1px #DDDDDD;
+}
+
+.agents > .agent > .trust{
+    width: 100px;
+    border-right: solid 1px #DDDDDD;
+    text-align: center;
 }
 
 .agents > .agent > .behaviour {
