@@ -4,7 +4,7 @@
       "name": "petter",
       "country": "usa",
       "behaviour" : "bad",
-      "categories" : ["computers", "tablets"]
+      "categories" : ["computers", "tablets","keyboards"]
     },
     {
       "name": "carl",
@@ -16,37 +16,37 @@
       "name": "lois",
       "country": "usa",
       "behaviour" : "good",
-      "categories" : ["keyboards"]
+      "categories" : ["watches"]
     },
     {
       "name": "meg",
       "country": "usa",
       "behaviour" : "good",
-      "categories" : ["tablets"]
+      "categories" : ["tablets","watches","toys"]
     },
     {
       "name": "brian",
       "country": "usa",
       "behaviour" : "normal",
-      "categories" : ["phones"]
+      "categories" : ["bikes","cars"]
     },
     {
       "name": "stewie",
       "country": "usa",
       "behaviour" : "bad",
-      "categories" : ["computers"]
+      "categories" : ["toys"]
     },
     {
       "name": "cleveland",
       "country": "usa",
       "behaviour" : "normal",
-      "categories" : ["phones"]
+      "categories" : ["computers","keyboards"]
     },
     {
       "name": "glenn",
       "country": "usa",
       "behaviour" : "bad",
-      "categories" : ["computers","keyboards"]
+      "categories" : ["airplanes","bikes"]
     },
     {
       "name": "joe",
@@ -63,7 +63,9 @@
         "macbookair13",
         "imac27",
         "macbookpro15",
-        "lenovopad"
+        "lenovopad",
+        "macbookair11",
+        "macpro"
       ]
     },
     {
@@ -74,7 +76,9 @@
         "lumia920",
         "googlenexus4",
         "sonyxperiaz",
-        "sonyxperias"
+        "sonyxperias",
+        "jiayug3s",
+        "iphone4s"
       ]
     },
     {
@@ -85,7 +89,9 @@
         "ipadmini",
         "googlenexus7",
         "windowssurfacert",
-        "windowssurface"
+        "windowssurface",
+        "ipad2",
+        "ipad3"
       ]
     },
     {
@@ -96,7 +102,88 @@
         "ibmmodelm",
         "ngskeyboard",
         "trustkeyboard",
-        "sonypad"
+        "sonypad",
+        "daskeyboard",
+        "razerarctosa",
+        "razerblackwidow"
+      ]
+    },
+    {
+      "name": "watches",
+      "products": [
+        "zenithelprimero",
+        "swatchdigital",
+        "casiodigital",
+        "rolexdatejust",
+        "iwcportuguese",
+        "camelthrophy",
+        "swatchoriginal",
+        "casiodigiborg"
+      ]
+    },
+    {
+      "name": "bikes",
+      "products": [
+        "suzukigs500e",
+        "kawazakininja250",
+        "kawazakininja300",
+        "hondacbr250",
+        "hondacbr600rr",
+        "hondacbr1000rr",
+        "yamahar6",
+        "yamahar1",
+        "ducati899panigale",
+        "ducati1199panigale",
+        "suzukiwolf50",
+        "suzukirg500",
+        "kawazakininjazx6r"
+      ]
+    },
+    {
+      "name": "cars",
+      "products": [
+        "toyotaprius",
+        "toyorahilux",
+        "toyotarav4",
+        "hondacivic",
+        "hondacrz",
+        "hondainsight",
+        "bmw320d",
+        "bmw850csi",
+        "bmwz8",
+        "vwbeetle",
+        "fiatstilo",
+        "fiatuno",
+        "mazda121",
+        "fordfiesta"
+      ]
+    },
+     {
+      "name": "airplanes",
+      "products": [
+        "airbus380",
+        "sukhoisuperjet100",
+        "sukhoisu35",
+        "lockheedmartinf16",
+        "sukhoisu30",
+        "sukhoisu34",
+        "sukhoipakfa",
+        "lockheedmartinsr71",
+        "lockheedmartinf35",
+        "cessna210",
+        "cessna140",
+        "cessna172",
+        "supermarinespitfire"
+      ]
+    },
+     {
+      "name": "toys",
+      "products": [
+        "teddybear",
+        "largeteddybear",
+        "legos",
+        "playmobil",
+        "barbie"       
       ]
     }
   ]
