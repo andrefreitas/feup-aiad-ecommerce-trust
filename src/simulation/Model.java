@@ -366,15 +366,12 @@ public class Model extends SimpleModel {
                 String product = feedback.getProduct().getName();
                 int score = feedback.getScore();
                 int ticks = feedback.getTimeTick();
-                int ticksNow = (int) getTickCount();
-                double globalTrust = agent.computeLinearTrust(agent, "<none>", "<none>", ticksNow);
                 String buyer = feedback.getBuyer().getName();
                 feedbackJson.addProperty("category", category);
                 feedbackJson.addProperty("product", product);
                 feedbackJson.addProperty("score", score);
                 feedbackJson.addProperty("ticks", ticks);
                 feedbackJson.addProperty("buyer", buyer);
-                feedbackJson.addProperty("trust", globalTrust);
                 feedbackListJson.add(feedbackJson);
             }
             
