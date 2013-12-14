@@ -131,6 +131,16 @@ public class User {
         return average;
     }
     
+    public double computeGlobalTrust(){
+        if(feedbacks.size() == 0) return 0;
+        double avg = feedbacks.get(0).getScore();
+        for(int i = 1; i < feedbacks.size(); i++) {
+            avg = (avg + 2 * feedbacks.get(i).getScore()) / 3.0;
+        }
+        
+        return avg;
+    }
+    
     @Override
     public String toString(){
         String out =  "Name: " + name + ", Country: " + country + ", Categories: ";

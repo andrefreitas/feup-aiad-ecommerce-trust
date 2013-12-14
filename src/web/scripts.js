@@ -49,7 +49,7 @@ function agentClick(elem) {
     $('#agentModalTitle').html(name);
     $('tbody').html("");
     $('#agentTrust').html("0");
-    var trust = getAgentTrust(name, "<none>", "<none>");
+    var trust = getAgentGlobalTrust(name);
     trust = trust.toString().substr(0, 4);
     $('#agentTrust').html(trust);
     var feedbacks = getAgentFeedbacks(name);
@@ -82,6 +82,14 @@ function getAgentTrust(agentName, category, product) {
     $.ajaxSetup({"async": true});
     return $.parseJSON(data["responseText"])["trust"];
 }
+
+function getAgentGlobalTrust(agentName) {
+    $.ajaxSetup({"async": false});
+    var data = $.getJSON("getAgentGlobalTrust/" + agentName);
+    $.ajaxSetup({"async": true});
+    return $.parseJSON(data["responseText"])["trust"];
+}
+
 
 function computeTrustClick() {
     $('#trustComputed').html("");
